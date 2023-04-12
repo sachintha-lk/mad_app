@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:flutter_signin_button/flutter_signin_button.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -82,7 +83,20 @@ class LoginScreen extends StatelessWidget {
                         Navigator.pushNamed(context, '/signup');
                       },
                       child: const Text('Sign Up'),
-                    )
+                    ),
+                    const Center(
+                      child: Padding(
+                        padding: EdgeInsets.fromLTRB(0, 20, 0, 8),
+                        child: Text("Or"),
+                      ),
+                    ),
+                    SignInButton(
+                      Buttons.Google,
+                      text: "Continue With Google",
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8.0)),
+                      onPressed: () {},
+                    ),
                   ],
                 ),
               ),
