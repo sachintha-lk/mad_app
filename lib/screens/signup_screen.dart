@@ -102,6 +102,7 @@ class SignUpScreen extends StatelessWidget {
                     SignInButton(
                       Buttons.Google,
                       text: "Continue With Google",
+                      padding: const EdgeInsets.fromLTRB(0, 4, 0, 4),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8.0)),
                       onPressed: () {},

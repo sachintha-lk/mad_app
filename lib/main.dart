@@ -13,6 +13,7 @@ class MyApp extends StatelessWidget {
       title: 'MarketPlace',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        fontFamily: 'Public Sans',
         useMaterial3: true,
         primarySwatch: Colors.blue,
       ),
@@ -46,41 +47,105 @@ class MyHomePage extends StatelessWidget {
               child: Text('Drawer Header'),
             ),
             ListTile(
-              title: const Text('Item 1'),
+              title: const Text('Sign Up'),
               onTap: () {
                 // Update the state of the app
-                // ...
+                Navigator.popAndPushNamed(context, '/signup');
                 // Then close the drawer
-                Navigator.pop(context);
+                // Navigator.pop(context);
               },
             ),
             ListTile(
-              title: const Text('Item 2'),
+              title: const Text('Login'),
               onTap: () {
                 // Update the state of the app
-                // ...
+                // Navigator.pushNamed(context, '/login');
+                Navigator.popAndPushNamed(context, '/login');
                 // Then close the drawer
-                Navigator.pop(context);
+                // Navigator.pop(context);
               },
             ),
           ],
         ),
       ),
-      body: Center(
-          child: Column(
+      body: Column(
         children: [
-          TextButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/login');
-              },
-              child: Text("Login")),
-          TextButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/signup');
-              },
-              child: Text("Sign Up")),
+          Container(
+            padding: EdgeInsets.fromLTRB(20, 2, 0, 10),
+            child: const Text(
+              'Featured Products',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 20,
+            child: GridView.count(
+              crossAxisCount: 1,
+              scrollDirection: Axis.horizontal,
+              children: [
+                Container(
+                  height: 200,
+                  width: 100,
+                  child: const Card(
+                    child: ListTile(
+                      title: Text("Test"),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          // Card(
+          //   child: Column(
+          //     mainAxisSize: MainAxisSize.min,
+          //     children: <Widget>[
+          //       const ListTile(
+          //         leading: Icon(Icons.album, size: 45),
+          //         title: Text('Sonu Nigam'),
+          //         subtitle: Text('Best of Sonu Nigam Song'),
+          //       ),
+          //     ],
+          //   ),
+          // ),
+
+          Card(
+            child: SizedBox(
+              height: 200,
+              width: 100,
+              child: Column(
+                children: [
+                  // Image.network('https://picsum.photos/250?image=9'),
+                  SizedBox(
+                    height: 100,
+                    width: 100,
+                    child: Image.network(
+                        fit: BoxFit.cover,
+                        'https://images.unsplash.com/photo-1572635196237-14b3f281503f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80'),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.all(5.0),
+                    child: Text(
+                      'Product 1 is th best',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.all(5.0),
+                    child: Text('5000 LKR'),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          // Image.network('https://picsum.photos/250?image=9'),
         ],
-      )),
+      ),
     );
   }
 }
