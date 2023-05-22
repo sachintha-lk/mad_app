@@ -3,16 +3,9 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 
-import '../components/input_widgets/text_input_field.dart';
-
-class LoginScreen extends StatefulWidget {
+class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
 
-  @override
-  State<LoginScreen> createState() => _LoginScreenState();
-}
-
-class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,8 +34,16 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                     ),
-                    const TextInputField(label: 'Email'),
-                    const TextInputField(label: 'Password'),
+                    const Padding(
+                        padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
+                        child: TextField(
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'Email',
+                          ),
+                        )),
+                    // create an input text field with a height
+
                     const Padding(
                         padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
                         child: TextField(

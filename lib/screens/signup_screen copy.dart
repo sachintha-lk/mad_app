@@ -3,16 +3,9 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 
-import '../components/input_widgets/text_input_field.dart';
+class SignUpScreen extends StatelessWidget {
+  const SignUpScreen({super.key});
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
-
-  @override
-  State<LoginScreen> createState() => _LoginScreenState();
-}
-
-class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,7 +25,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     Center(
                       child: Container(
                         child: const Text(
-                          'Login',
+                          'Sign Up',
                           style: TextStyle(
                             fontSize: 30,
                             fontWeight: FontWeight.bold,
@@ -41,15 +34,29 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                     ),
-                    const TextInputField(label: 'Email'),
-                    const TextInputField(label: 'Password'),
                     const Padding(
                         padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
                         child: TextField(
                           decoration: InputDecoration(
-                            contentPadding: EdgeInsets.only(top: -5),
+                            border: OutlineInputBorder(),
+                            labelText: 'Email',
+                          ),
+                        )),
+                    const Padding(
+                        padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
+                        child: TextField(
+                          decoration: InputDecoration(
                             border: OutlineInputBorder(),
                             labelText: 'Password',
+                          ),
+                          obscureText: true,
+                        )),
+                    const Padding(
+                        padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
+                        child: TextField(
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'Confirm Password',
                           ),
                           obscureText: true,
                         )),
@@ -60,10 +67,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           borderRadius: BorderRadius.circular(8.0),
                         ),
                       )),
-                      onPressed: () {
-                        // alert box hello world
-                      },
-                      child: const Text('Login'),
+                      onPressed: () {},
+                      child: const Text('Sign Up'),
                     ),
                     const SizedBox(
                       height: 10,
@@ -71,7 +76,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     Center(
                       child: Container(
                         child: const Text(
-                          "Don't have an account?",
+                          "Already have an account?",
                         ),
                       ),
                     ),
@@ -84,9 +89,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                       onPressed: () {
-                        Navigator.pushNamed(context, '/signup');
+                        Navigator.pushNamed(context, '/login');
                       },
-                      child: const Text('Sign Up'),
+                      child: const Text('Login'),
                     ),
                     const Center(
                       child: Padding(

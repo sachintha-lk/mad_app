@@ -1,9 +1,21 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:mad_app/screens/login_screen.dart';
 import 'package:mad_app/screens/signup_screen.dart';
+import 'themes/color_schemes.dart';
+import 'components/cards/product_item_card.dart';
 
-void main() => runApp(MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.landscapeLeft,
+    DeviceOrientation.landscapeRight,
+  ]);
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   // It is the root widget of your application.
@@ -15,7 +27,12 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'Public Sans',
         useMaterial3: true,
-        primarySwatch: Colors.blue,
+        colorScheme: lightColorScheme,
+      ),
+      darkTheme: ThemeData(
+        fontFamily: 'Public Sans',
+        useMaterial3: true,
+        colorScheme: darkColorScheme,
       ),
       initialRoute: '/home',
       routes: {
@@ -39,12 +56,13 @@ class MyHomePage extends StatelessWidget {
         // Add a ListView to the drawer. This ensures the user can scroll
         // through the options in the drawer if there isn't enough vertical
         // space to fit everything.
+        backgroundColor: Color(0xFF501261),
         child: ListView(
           // Important: Remove any padding from the ListView.
           padding: EdgeInsets.zero,
           children: [
             const DrawerHeader(
-              child: Text('Drawer Header'),
+              child: Text('TerraCart'),
             ),
             ListTile(
               title: const Text('Sign Up'),
@@ -98,52 +116,68 @@ class MyHomePage extends StatelessWidget {
               ],
             ),
           ),
-          // Card(
-          //   child: Column(
-          //     mainAxisSize: MainAxisSize.min,
-          //     children: <Widget>[
-          //       const ListTile(
-          //         leading: Icon(Icons.album, size: 45),
-          //         title: Text('Sonu Nigam'),
-          //         subtitle: Text('Best of Sonu Nigam Song'),
-          //       ),
-          //     ],
-          //   ),
-          // ),
-
-          Card(
-            child: SizedBox(
-              height: 200,
-              width: 100,
-              child: Column(
-                children: [
-                  // Image.network('https://picsum.photos/250?image=9'),
-                  SizedBox(
-                    height: 100,
-                    width: 100,
-                    child: Image.network(
-                        fit: BoxFit.cover,
-                        'https://images.unsplash.com/photo-1572635196237-14b3f281503f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80'),
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.all(5.0),
-                    child: Text(
-                      'Product 1 is th best',
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.all(5.0),
-                    child: Text('5000 LKR'),
-                  ),
-                ],
-              ),
-            ),
+          ProductItemCard(
+            productName: "This is product",
+            productPrice: 2134,
+            productRating: 3.4,
           ),
-          // Image.network('https://picsum.photos/250?image=9'),
+          ProductItemCard(
+            productName:
+                "This is product This is product This is product This is product This is product This is product ",
+            productPrice: 2134,
+            productRating: 3.4,
+          ),
+          const SizedBox(
+            child: const CircularProgressIndicator(),
+          ),
+
+          // grid with colored boxes
+          // Expanded(
+          //   child: OrientationBuilder(builder: (context, orientaion) {
+          //     return GridView.count(
+          //       crossAxisCount: orientaion == Orientation.portrait ? 2 : 3,
+          //       scrollDirection: Axis.vertical,
+          //       children: [
+          //         Container(
+          //           height: 200,
+          //           width: 100,
+          //           color: Colors.red,
+          //           child: Text("1"),
+          //         ),
+          //         Container(
+          //           height: 200,
+          //           width: 100,
+          //           color: Colors.blue,
+          //           child: Text("2"),
+          //         ),
+          //         Container(
+          //           height: 200,
+          //           width: 100,
+          //           color: Colors.green,
+          //           child: Text("3"),
+          //         ),
+          //         Container(
+          //           height: 200,
+          //           width: 100,
+          //           color: Colors.yellow,
+          //           child: Text("4"),
+          //         ),
+          //         Container(
+          //           height: 200,
+          //           width: 100,
+          //           color: Colors.orange,
+          //           child: Text("5"),
+          //         ),
+          //         Container(
+          //           height: 200,
+          //           width: 100,
+          //           color: Colors.pink,
+          //           child: Text("6"),
+          //         ),
+          //       ],
+          //     );
+          //   }),
+          // ),
         ],
       ),
     );
