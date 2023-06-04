@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
+// import 'package:flutter/src/widgets/framework.dart';
+// import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 
 class SignUpScreen extends StatelessWidget {
@@ -10,11 +10,11 @@ class SignUpScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Name TDB"),
-        centerTitle: true,
+  
       ),
       body: Center(
         child: SizedBox(
+          height: 500,
           width: 350,
           child: Column(
             children: [

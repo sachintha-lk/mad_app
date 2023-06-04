@@ -1,11 +1,13 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:mad_app/screens/cart_screen.dart';
+
+import 'package:mad_app/screens/home_screen.dart';
 import 'package:mad_app/screens/login_screen.dart';
+import 'package:mad_app/screens/orders_screen.dart';
+import 'package:mad_app/screens/profile.dart';
 import 'package:mad_app/screens/signup_screen.dart';
 import 'themes/color_schemes.dart';
-import 'components/cards/product_item_card.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,58 +16,183 @@ void main() async {
     DeviceOrientation.landscapeLeft,
     DeviceOrientation.landscapeRight,
   ]);
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   // It is the root widget of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'MarketPlace',
+      title: 'Terra Cart',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        fontFamily: 'Public Sans',
+        // textTheme: GoogleFonts.publicSansTextTheme(
+        //   Theme.of(context).textTheme,
+        // ),
         useMaterial3: true,
         colorScheme: lightColorScheme,
       ),
       darkTheme: ThemeData(
-        fontFamily: 'Public Sans',
+        // textTheme: GoogleFonts.publicSansTextTheme(
+        //   Theme.of(context).textTheme,
+        // ),
+        // todo font
+
         useMaterial3: true,
         colorScheme: darkColorScheme,
       ),
       initialRoute: '/home',
       routes: {
-        '/home': (context) => MyHomePage(),
-        '/login': (context) => LoginScreen(),
-        '/signup': (context) => SignUpScreen()
+        '/home': (context) => const MyHomePage(),
+        '/login': (context) => const LoginScreen(),
+        '/signup': (context) => const SignUpScreen()
       },
     );
   }
 }
 
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key});
+
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  int _currentIndex = 0;
+
+  final List<Widget> _screens = const [
+    HomeScreen(),
+    CartScreen(),
+    OrdersScreen(),
+    ProfileScreen(),
+  ];
+
+  void _onTabTapped(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("MarketPlace"),
+        title: const Text("Terra Cart"),
         centerTitle: true,
       ),
       drawer: Drawer(
         // Add a ListView to the drawer. This ensures the user can scroll
         // through the options in the drawer if there isn't enough vertical
         // space to fit everything.
-        backgroundColor: Color(0xFF501261),
+        backgroundColor: const Color(0xFF501261),
         child: ListView(
           // Important: Remove any padding from the ListView.
-          padding: EdgeInsets.zero,
+          padding: const EdgeInsets.fromLTRB(20, 2, 2, 10),
           children: [
-            const DrawerHeader(
-              child: Text('TerraCart'),
+            DrawerHeader(
+              decoration: const BoxDecoration(
+                border: Border(
+                  bottom: BorderSide.none,
+                ),
+              ),
+              child: Row(
+                children: [
+                  Image.asset(
+                    'assets/images/logo-terracart.png',
+                    height: 70,
+                    width: 70,
+                  ),
+                  // add google font k2d
+
+                  const Text(
+                    'TerraCart',
+                    style: TextStyle(
+                        fontSize: 30, color: Colors.white, fontFamily: 'K2D'),
+                  ),
+                ],
+              ),
             ),
             ListTile(
-              title: const Text('Sign Up'),
+              title: const Row(
+                children: [
+                  Icon(
+                    Icons.article,
+                    color: Colors.white,
+                    size: 32,
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text('Orders',
+                      style: TextStyle(fontSize: 20, color: Colors.white)),
+                ],
+              ),
+              onTap: () {
+                // Update the state of the app
+                // Navigator.popAndPushNamed(context, '/signup');
+                // Then close the drawer
+                // Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: const Row(
+                children: [
+                  Icon(
+                    Icons.shopping_cart_outlined,
+                    color: Colors.white,
+                    size: 32,
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text('Cart',
+                      style: TextStyle(fontSize: 20, color: Colors.white)),
+                ],
+              ),
+              onTap: () {
+                // Update the state of the app
+                // Navigator.popAndPushNamed(context, '/signup');
+                // Then close the drawer
+                // Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: const Row(
+                children: [
+                  Icon(
+                    Icons.person_outline_outlined,
+                    color: Colors.white,
+                    size: 32,
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text('Profile',
+                      style: TextStyle(fontSize: 20, color: Colors.white)),
+                ],
+              ),
+              onTap: () {
+                // Update the state of the app
+                // Navigator.popAndPushNamed(context, '/signup');
+                // Then close the drawer
+                // Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: const Row(
+                children: [
+                  Icon(
+                    Icons.person,
+                    color: Colors.white,
+                  ),
+                  Text('Sign Up',
+                      style: TextStyle(fontSize: 20, color: Colors.white)),
+                ],
+              ),
               onTap: () {
                 // Update the state of the app
                 Navigator.popAndPushNamed(context, '/signup');
@@ -86,99 +213,30 @@ class MyHomePage extends StatelessWidget {
           ],
         ),
       ),
-      body: Column(
-        children: [
-          Container(
-            padding: EdgeInsets.fromLTRB(20, 2, 0, 10),
-            child: const Text(
-              'Featured Products',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
+      body: _screens[_currentIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home_outlined),
+            label: 'Home',
           ),
-          SizedBox(
-            height: 20,
-            child: GridView.count(
-              crossAxisCount: 1,
-              scrollDirection: Axis.horizontal,
-              children: [
-                Container(
-                  height: 200,
-                  width: 100,
-                  child: const Card(
-                    child: ListTile(
-                      title: Text("Test"),
-                    ),
-                  ),
-                ),
-              ],
-            ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.shopping_cart_outlined),
+            label: 'Cart',
           ),
-          ProductItemCard(
-            productName: "This is product",
-            productPrice: 2134,
-            productRating: 3.4,
+          BottomNavigationBarItem(
+            icon: Icon(Icons.article),
+            label: 'Orders',
           ),
-          ProductItemCard(
-            productName:
-                "This is product This is product This is product This is product This is product This is product ",
-            productPrice: 2134,
-            productRating: 3.4,
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person_outline_outlined),
+            label: 'Profile',
           ),
-          const SizedBox(
-            child: const CircularProgressIndicator(),
-          ),
-
-          // grid with colored boxes
-          // Expanded(
-          //   child: OrientationBuilder(builder: (context, orientaion) {
-          //     return GridView.count(
-          //       crossAxisCount: orientaion == Orientation.portrait ? 2 : 3,
-          //       scrollDirection: Axis.vertical,
-          //       children: [
-          //         Container(
-          //           height: 200,
-          //           width: 100,
-          //           color: Colors.red,
-          //           child: Text("1"),
-          //         ),
-          //         Container(
-          //           height: 200,
-          //           width: 100,
-          //           color: Colors.blue,
-          //           child: Text("2"),
-          //         ),
-          //         Container(
-          //           height: 200,
-          //           width: 100,
-          //           color: Colors.green,
-          //           child: Text("3"),
-          //         ),
-          //         Container(
-          //           height: 200,
-          //           width: 100,
-          //           color: Colors.yellow,
-          //           child: Text("4"),
-          //         ),
-          //         Container(
-          //           height: 200,
-          //           width: 100,
-          //           color: Colors.orange,
-          //           child: Text("5"),
-          //         ),
-          //         Container(
-          //           height: 200,
-          //           width: 100,
-          //           color: Colors.pink,
-          //           child: Text("6"),
-          //         ),
-          //       ],
-          //     );
-          //   }),
-          // ),
         ],
+        currentIndex: _currentIndex,
+        selectedItemColor: Theme.of(context).colorScheme.primary,
+        onTap: _onTabTapped,
       ),
     );
   }
