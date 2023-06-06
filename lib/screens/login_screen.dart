@@ -16,17 +16,14 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          
           Expanded(
             child: ListView(
               padding: const EdgeInsets.all(8),
               children: <Widget>[
-               
                 Center(
                   child: Container(
                     child: const Text(
@@ -39,9 +36,14 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                 ),
-                const TextInputField(label: 'Email'),
-                const TextInputField(label: 'Password'),
-                
+                TextInputField(
+                  label: 'Email',
+                  controller: TextEditingController(),
+                ),
+                TextInputField(
+                  label: 'Password',
+                  controller: TextEditingController(),
+                ),
                 FilledButton(
                   style: ButtonStyle(
                       shape: MaterialStateProperty.all(
@@ -59,7 +61,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 Container(
                   child: const Center(
-                    child:  Text(
+                    child: Text(
                       "Don't have an account?",
                     ),
                   ),

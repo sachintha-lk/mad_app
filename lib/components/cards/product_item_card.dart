@@ -34,9 +34,6 @@ class ProductItemCard extends StatelessWidget {
                 child: SizedBox(
                   height: 100,
                   width: 135,
-       
-
-
                   // child: CachedNetworkImage(
                   //   fit: BoxFit.fill,
                   //   imageUrl:

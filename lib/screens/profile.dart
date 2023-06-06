@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import 'edit_profile_screen.dart';
+
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
 
@@ -43,13 +45,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
               'John Doe',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
-            Container(
-              margin: const EdgeInsets.fromLTRB(20, 5, 20, 5),
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.black),
-                color: Colors.white,
+            Card(
+              shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
+              margin: const EdgeInsets.fromLTRB(20, 5, 20, 5),
+              // decoration: BoxDecoration(
+              //   border:
+              //       Border.all(color: const Color.fromARGB(255, 131, 131, 131)),
+              //   color: Theme.of(context).cardTheme.color,
+              //   borderRadius: BorderRadius.circular(10),
+              // ),
               child: SizedBox(
                 width: MediaQuery.of(context).size.width * 0.9,
                 child: const Padding(
@@ -143,6 +149,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                     ],
                   ),
+                ),
+              ),
+            ),
+            SizedBox(
+              width: MediaQuery.of(context).size.width * 0.9,
+              child: FilledButton(
+                style: ButtonStyle(
+                    shape: MaterialStateProperty.all(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                )),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => EditProfileScreen(),
+                    ),
+                  );
+                },
+                child: const Text(
+                  'Edit Profile',
+                  style: TextStyle(fontSize: 17, color: Colors.white),
                 ),
               ),
             ),

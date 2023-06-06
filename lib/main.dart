@@ -7,6 +7,7 @@ import 'package:mad_app/screens/login_screen.dart';
 import 'package:mad_app/screens/orders_screen.dart';
 import 'package:mad_app/screens/profile.dart';
 import 'package:mad_app/screens/signup_screen.dart';
+
 import 'themes/color_schemes.dart';
 
 void main() async {
