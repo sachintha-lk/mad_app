@@ -42,19 +42,13 @@ class _BottomNavBarStatelessState extends State<BottomNavBarStateless> {
   }
 
   void _onTabTapped(int index) {
-    if (index == 0) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const MyHomePage(),
-        ),
-      );
-    } else if (index == 1) {
-      Navigator.pushNamed(context, '/cart');
-    } else if (index == 2) {
-      Navigator.pushNamed(context, '/orders');
-    } else if (index == 3) {
-      Navigator.pushNamed(context, '/profile');
-    }
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => MyHomePage(),
+        // settings: const RouteSettings(
+        //     arguments: 0), // Set the initial index to 1 (page 2)
+      ),
+    );
   }
 }

@@ -5,6 +5,7 @@ import 'package:mad_app/screens/cart_screen.dart';
 import 'package:mad_app/screens/home_screen.dart';
 import 'package:mad_app/screens/login_screen.dart';
 import 'package:mad_app/screens/orders_screen.dart';
+import 'package:mad_app/screens/product_screen.dart';
 import 'package:mad_app/screens/profile.dart';
 import 'package:mad_app/screens/signup_screen.dart';
 
@@ -45,9 +46,10 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         colorScheme: darkColorScheme,
       ),
-      initialRoute: '/home',
+      initialRoute: '/',
       routes: {
-        '/home': (context) => const MyHomePage(),
+        '/': (context) => const MyHomePage(), // the main page
+        '/home': (context) => const HomeScreen(),
         '/login': (context) => const LoginScreen(),
         '/signup': (context) => const SignUpScreen()
       },
@@ -56,13 +58,14 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
+  const MyHomePage({Key? key}) : super(key: key);
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  // final int startIndex = 0;
   int _currentIndex = 0;
 
   final List<Widget> _screens = const [
@@ -76,6 +79,13 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       _currentIndex = index;
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    _currentIndex = 0;
   }
 
   @override
@@ -103,7 +113,7 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Row(
                 children: [
                   Image.asset(
-                    'assets/images/logo-terracart.png',
+                    'lib/images/logo-terracart.png',
                     height: 70,
                     width: 70,
                   ),
@@ -214,7 +224,13 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      body: _screens[_currentIndex],
+      // body: _screens[_currentIndex],
+      // body: ProductScreen(),
+
+      body: IndexedStack(
+        index: _currentIndex,
+        children: _screens,
+      ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         items: const <BottomNavigationBarItem>[

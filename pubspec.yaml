@@ -40,6 +40,7 @@ dependencies:
   cached_network_image: ^3.2.3
   google_fonts: ^4.0.4
   font_awesome_flutter: ^9.2.0
+  input_quantity: ^1.1.6
 
 dev_dependencies:
   flutter_test:
