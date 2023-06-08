@@ -79,6 +79,16 @@ class ProductItemCard extends StatelessWidget {
                         ),
                       ),
                     ),
+                    RatingBarIndicator(
+                      rating: productRating,
+                      itemBuilder: (context, index) => Icon(
+                        Icons.star,
+                        color: Colors.amber,
+                      ),
+                      itemCount: 5,
+                      itemSize: 17,
+                      direction: Axis.horizontal,
+                    ),
                     Text(
                       'LKR $productPrice',
                       style: const TextStyle(
