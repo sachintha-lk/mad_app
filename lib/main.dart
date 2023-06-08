@@ -54,7 +54,18 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => const MyHomePage(), // the main page
+        '/': (context) => MyHomePage(
+              initialIndex: 0,
+            ),
+        '/cart': (context) => MyHomePage(
+              initialIndex: 1,
+            ),
+        '/orders': (context) => MyHomePage(
+              initialIndex: 2,
+            ),
+        '/profile': (context) => MyHomePage(
+              initialIndex: 3,
+            ),
         '/home': (context) => const HomeScreen(),
         '/login': (context) => const LoginScreen(),
         '/signup': (context) => const SignUpScreen()
@@ -64,7 +75,9 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key}) : super(key: key);
+  final initialIndex;
+
+  const MyHomePage({Key? key, required this.initialIndex}) : super(key: key);
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -72,6 +85,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   // final int startIndex = 0;
+
   int _currentIndex = 0;
 
   final List<Widget> _screens = const [
@@ -91,7 +105,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
 
-    _currentIndex = 0;
+    _currentIndex = widget.initialIndex;
   }
 
   @override
@@ -199,8 +213,11 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               onTap: () {
                 // Update the state of the app
-                // Navigator.popAndPushNamed(context, '/signup');
-                // Then close the drawer
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => MyHomePage(
+                            initialIndex: 2))); // Then close the drawer
                 // Navigator.pop(context);
               },
             ),

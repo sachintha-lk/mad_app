@@ -45,7 +45,9 @@ class _BottomNavBarStatelessState extends State<BottomNavBarStateless> {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => MyHomePage(),
+        builder: (context) => MyHomePage(
+          initialIndex: index,
+        ),
         // settings: const RouteSettings(
         //     arguments: 0), // Set the initial index to 1 (page 2)
       ),
