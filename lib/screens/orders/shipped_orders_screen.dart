@@ -1,76 +1,85 @@
 import 'package:flutter/material.dart';
+import 'package:mad_app/components/cards/order_list_item_card.dart';
+import 'dart:convert';
 
-class PendingOrders extends StatefulWidget {
-  const PendingOrders({super.key});
+class ShippedOrders extends StatefulWidget {
+  const ShippedOrders({super.key});
 
   @override
-  State<PendingOrders> createState() => _PendingOrdersState();
+  State<ShippedOrders> createState() => _ShippedOrdersState();
 }
 
-class _PendingOrdersState extends State<PendingOrders> {
+class _ShippedOrdersState extends State<ShippedOrders> {
+  List<Map<String, dynamic>> orders = [];
+  bool loadingError = false;
+
+  String jsonFile = 'lib/json/shipped_orders_list.json';
+
+  @override
+  void initState() {
+    super.initState();
+    loadOrders();
+  }
+
+  Future<void> loadOrders() async {
+    try {
+      final String jsonString =
+          await DefaultAssetBundle.of(context).loadString(jsonFile);
+      final List<dynamic> jsonList = json.decode(jsonString);
+      if (mounted) {
+        setState(() {
+          orders = List<Map<String, dynamic>>.from(jsonList);
+          loadingError = false;
+        });
+      }
+    } catch (e) {
+      if (mounted) {
+        setState(() {
+          loadingError = true;
+        });
+      }
+
+      print('Error loading orders: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(
-          child: ListView.builder(
-            shrinkWrap: true,
-            physics: const ClampingScrollPhysics(),
-            scrollDirection: Axis.vertical,
-            itemCount: 5,
-            itemBuilder: (context, index) {
-              return Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    children: [
-                      SizedBox(
-                        width: 10,
-                      ),
-                      SizedBox(
-                        height: 50,
-                        width: 50,
-                        child: Image.asset(
-                          fit: BoxFit.cover,
-                          'lib/images/product_imgs/nike.png',
-                        ),
-                      ),
-                      const Padding(
-                        padding: const EdgeInsets.only(left: 15),
-                        child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Nike Red Premium Shoes',
-                              ),
-                              Text(
-                                'Price: 2134 x 2 units',
-                                style: TextStyle(
-                                  color: Colors.grey,
-                                  fontSize: 12,
-                                ),
-                              ),
-                              Text('LKR 2,000.00'),
-                            ],
-                          ),
-                        ),
-                      ),
-                      const Spacer(),
-                      IconButton(
-                        icon: Icon(Icons.delete),
-                        onPressed: () {},
-                      ),
-                    ],
-                  ),
-                ),
-              );
-            },
-          ),
+    loadOrders(); // Load the data every time the build method is called
+    if (loadingError) {
+      return Center(
+        child: Text(
+          'Error loading orders',
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
         ),
-      ],
+      );
+    }
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            SizedBox(
+              child: ListView.builder(
+                shrinkWrap: true,
+                physics: const ClampingScrollPhysics(),
+                scrollDirection: Axis.vertical,
+                itemCount: orders.length,
+                itemBuilder: (context, index) {
+                  final order = orders[index];
+                  return OrderListItemCard(
+                    orderNo: 'Order No: ${order['orderNo']}',
+                    productName: order['productName'],
+                    shopName: order['shopName'],
+                    price: order['price'].toDouble(),
+                    shippedStatus: order['shippedStatus'],
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

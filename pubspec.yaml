@@ -41,6 +41,7 @@ dependencies:
   google_fonts: ^4.0.4
   font_awesome_flutter: ^9.2.0
   input_quantity: ^1.1.6
+  intl: ^0.18.1
 
 dev_dependencies:
   flutter_test:
@@ -68,6 +69,7 @@ flutter:
   assets:
     - lib/images/
     - lib/images/product_imgs/
+    - lib/json/
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

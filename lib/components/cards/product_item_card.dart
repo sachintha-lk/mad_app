@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:intl/intl.dart';
+
 // import 'package:cached_network_image/cached_network_image.dart';
 
 class ProductItemCard extends StatelessWidget {
@@ -14,8 +16,15 @@ class ProductItemCard extends StatelessWidget {
       required this.productRating,
       required this.productPrice});
 
+  String formatPrice(double price) {
+    final formatter = NumberFormat.currency(decimalDigits: 2, symbol: '');
+    return formatter.format(price);
+  }
+
   @override
   Widget build(BuildContext context) {
+    final formattedProductPrice = formatPrice(productPrice);
+
     return Card(
       child: SizedBox(
         height: 200,
@@ -90,7 +99,7 @@ class ProductItemCard extends StatelessWidget {
                       direction: Axis.horizontal,
                     ),
                     Text(
-                      'LKR $productPrice',
+                      'LKR $formattedProductPrice',
                       style: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w500,

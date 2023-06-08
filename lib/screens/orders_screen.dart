@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mad_app/screens/orders/pending_orders_screen.dart';
+import 'package:mad_app/screens/orders/shipped_orders_screen.dart';
 
 class OrdersScreen extends StatefulWidget {
   const OrdersScreen({super.key});
@@ -29,7 +30,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
             child: TabBarView(
               children: [
                 PendingOrders(),
-                Icon(Icons.directions_transit),
+                ShippedOrders(),
               ],
             ),
           ),
