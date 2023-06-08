@@ -47,7 +47,7 @@ class _PendingOrdersState extends State<PendingOrders> {
   Widget build(BuildContext context) {
     loadOrders(); // Load the data every time the build method is called
     if (loadingError) {
-      return Center(
+      return const Center(
         child: Text(
           'Error loading orders',
           style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),

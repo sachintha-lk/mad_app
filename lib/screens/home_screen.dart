@@ -37,6 +37,7 @@ class HomeScreen extends StatelessWidget {
                   return ProductItemCard(
                     productName:
                         "Product ${index + 1}", // Generate a unique product name
+                    productImg: 'lib/images/product_imgs/nike.png',
                     productPrice: 2134, // Set the product price
                     productRating: 3.4, // Set the product rating
                   );
@@ -130,6 +131,7 @@ class HomeScreen extends StatelessWidget {
                 return ProductItemCard(
                   productName:
                       "Products ${index + 1}", // Generate a unique product name
+                  productImg: 'lib/images/product_imgs/nike.png',
                   productPrice: 2134, // Set the product price
                   productRating: 3.4, // Set the product rating
                 );

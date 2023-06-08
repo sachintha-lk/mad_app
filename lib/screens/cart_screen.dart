@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:input_quantity/input_quantity.dart';
+import 'package:sqflite/sqflite.dart';
+import '../components/cards/cart_item_card.dart';
+import 'package:intl/intl.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
@@ -9,8 +13,88 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin {
+  List<CartItem> cartItems = [];
+
+  double cartTotal = 0;
+
+  var formattedCartTotal = '';
+
+  @override
+  void initState() {
+    super.initState();
+    // addDummyCartItems();
+    fetchCartItems();
+  }
+
+  @override
+  void dispose() {
+    Hive.close();
+    super.dispose();
+  }
+
+  String formatPrice(double price) {
+    final formatter = NumberFormat.currency(decimalDigits: 2, symbol: '');
+    return formatter.format(price);
+  }
+
+  void fetchCartItems() async {
+    final cartBox = await Hive.openBox('cart');
+
+    List<CartItem> fetchedItems = cartBox.values.map((item) {
+      return item as CartItem;
+    }).toList();
+
+    setState(() {
+      cartItems = fetchedItems;
+      calculateCartTotal();
+    });
+  }
+
+  // void fetchCartItems() async {
+  //   // TODO check this later
+  //   Database database = await openDatabase('path_to_your_database.db');
+  //   List<Map<String, dynamic>> items = await database.query('cart');
+
+  //   // Convert the fetched data into CartItem objects
+  //   List<CartItem> fetchedItems = items.map((item) {
+  //     return CartItem(
+  //       productName: item['productName'],
+  //       unitPrice: item['unitPrice'],
+  //       quantity: item['quantity'],
+  //     );
+  //   }).toList();
+
+  //   setState(() {
+  //     cartItems = fetchedItems;
+  //     calculateCartTotal();
+  //   });
+  // }
+
+  void calculateCartTotal() {
+    double newTotal = 0;
+    for (CartItem item in cartItems) {
+      newTotal += item.unitPrice * item.quantity;
+    }
+
+    setState(() {
+      cartTotal = newTotal;
+    });
+
+    formattedCartTotal = formatPrice(cartTotal);
+  }
+
+  void updateCartItemQuantity(int index, int newQuantity) {
+    setState(() {
+      cartItems[index].quantity = newQuantity;
+      cartItems[index].save(); // hive save
+      calculateCartTotal();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    var formattedCartTotal = formatPrice(cartTotal);
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -20,55 +104,15 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin {
                 shrinkWrap: true,
                 physics: const ClampingScrollPhysics(),
                 scrollDirection: Axis.vertical,
-                itemCount: 5,
+                itemCount: cartItems.length,
                 itemBuilder: (context, index) {
-                  return Card(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          SizedBox(
-                            width: 10,
-                          ),
-                          SizedBox(
-                            height: 50,
-                            width: 50,
-                            child: Image.asset(
-                              fit: BoxFit.cover,
-                              'lib/images/product_imgs/nike.png',
-                            ),
-                          ),
-                          const Padding(
-                            padding: const EdgeInsets.only(left: 15),
-                            child: Align(
-                              alignment: Alignment.centerLeft,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Nike Red Premium Shoes',
-                                  ),
-                                  Text(
-                                    'Price: 2134 x 2 units',
-                                    style: TextStyle(
-                                      color: Colors.grey,
-                                      fontSize: 12,
-                                    ),
-                                  ),
-                                  Text('LKR 2,000.00'),
-                                ],
-                              ),
-                            ),
-                          ),
-                          const Spacer(),
-                          IconButton(
-                            icon: Icon(Icons.delete),
-                            onPressed: () {},
-                          ),
-                        ],
-                      ),
-                    ),
+                  return CartItemCard(
+                    productName: cartItems[index].productName,
+                    unitPrice: cartItems[index].unitPrice,
+                    quantity: cartItems[index].quantity,
+                    onQuantityUpdated: (newQuantity) {
+                      updateCartItemQuantity(index, newQuantity);
+                    },
                   );
                 },
               ),
@@ -98,7 +142,7 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin {
                         'Total',
                       ),
                       Text(
-                        'LKR 2,000.00',
+                        'LKR $formattedCartTotal',
                         style: TextStyle(
                           fontSize: 16,
                         ),
@@ -137,4 +181,62 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin {
       ),
     );
   }
+}
+
+@HiveType(typeId: 0)
+class CartItem extends HiveObject {
+  @HiveField(0)
+  final String productName;
+
+  @HiveField(1)
+  final double unitPrice;
+
+  @HiveField(2)
+  int quantity;
+
+  CartItem({
+    required this.productName,
+    required this.unitPrice,
+    required this.quantity,
+  });
+}
+
+class CartItemAdapter extends TypeAdapter<CartItem> {
+  @override
+  final typeId = 0;
+
+  @override
+  CartItem read(BinaryReader reader) {
+    return CartItem(
+      productName: reader.read(),
+      unitPrice: reader.read(),
+      quantity: reader.read(),
+    );
+  }
+
+  @override
+  void write(BinaryWriter writer, CartItem obj) {
+    writer.write(obj.productName);
+    writer.write(obj.unitPrice);
+    writer.write(obj.quantity);
+  }
+}
+
+void addDummyCartItems() async {
+  final cartBox = await Hive.openBox('cart');
+
+  CartItem item1 = CartItem(
+    productName: 'Product 1',
+    unitPrice: 10.99,
+    quantity: 2,
+  );
+
+  CartItem item2 = CartItem(
+    productName: 'Product 2',
+    unitPrice: 15.99,
+    quantity: 3,
+  );
+
+  cartBox.add(item1);
+  cartBox.add(item2);
 }

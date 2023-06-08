@@ -2,7 +2,7 @@
 [
     {
       "orderNo": "123456",
-      "productName": "Shipped Product 1asdkfjhadkfhsadfhkajdshfkjsadhfkjasdhfjasdhflkjdshfkjh",
+      "productName": "Shipped Product 1",
       "shopName": "Shop 1",
       "price": 1000,
       "shippedStatus": true

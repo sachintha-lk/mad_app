@@ -8,11 +8,12 @@ class ProductItemCard extends StatelessWidget {
   final String productName;
   final double productRating;
   final double productPrice;
-  // final String productImgUrl;
+  final String productImg;
 
   const ProductItemCard(
       {super.key,
       required this.productName,
+      required this.productImg,
       required this.productRating,
       required this.productPrice});
 
@@ -32,7 +33,7 @@ class ProductItemCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const ClipRRect(
+            ClipRRect(
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(10.0),
                 topRight: Radius.circular(10.0),
@@ -40,25 +41,9 @@ class ProductItemCard extends StatelessWidget {
               child: SizedBox(
                 height: 100,
                 width: 135,
-                child: SizedBox(
-                  height: 100,
-                  width: 135,
-                  // child: CachedNetworkImage(
-                  //   fit: BoxFit.fill,
-                  //   imageUrl:
-                  //       "https://images.unsplash.com/photo-1572635196237-14b3f28103f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80",
-                  //   placeholder: (context, url) => const SizedBox(
-                  //     // height: 7,
-                  //     // width: 7,
-                  //     child: CircularProgressIndicator(),
-                  //   ),
-                  //   // errorWidget: (context, url, error) => const Icon(Icons.error),
-                  //   errorWidget: (context, url, error) => const SizedBox(
-                  //     // height: 7,
-                  //     // width: 7,
-                  //     child: Icon(Icons.error),
-                  //   ),
-                  // ),
+                child: Image.asset(
+                  productImg,
+                  fit: BoxFit.cover,
                 ),
               ),
               // child: Image.network(

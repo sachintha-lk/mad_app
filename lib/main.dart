@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:mad_app/screens/cart_screen.dart';
+import 'package:path_provider/path_provider.dart' as pathProvider;
 
 import 'package:mad_app/screens/home_screen.dart';
 import 'package:mad_app/screens/login_screen.dart';
@@ -18,6 +21,9 @@ void main() async {
     DeviceOrientation.landscapeLeft,
     DeviceOrientation.landscapeRight,
   ]);
+  final appDocumentDir = await pathProvider.getApplicationDocumentsDirectory();
+  Hive.init(appDocumentDir.path);
+  Hive.registerAdapter(CartItemAdapter());
   runApp(const MyApp());
 }
 
@@ -119,10 +125,15 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   // add google font k2d
 
-                  const Text(
+                  Text(
                     'TerraCart',
                     style: TextStyle(
-                        fontSize: 30, color: Colors.white, fontFamily: 'K2D'),
+                      fontSize: 30,
+                      color: Theme.of(context).brightness == Brightness.light
+                          ? Colors.purple
+                          : Colors.white,
+                      fontFamily: 'K2D',
+                    ),
                   ),
                 ],
               ),
@@ -253,6 +264,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ],
         currentIndex: _currentIndex,
         selectedItemColor: Theme.of(context).colorScheme.primary,
+        // onTap: _onTabTapped,
         onTap: _onTabTapped,
       ),
     );
