@@ -52,10 +52,10 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         colorScheme: darkColorScheme,
       ),
-      initialRoute: '/',
+      initialRoute: '/login',
       routes: {
         '/': (context) => MyHomePage(
-              initialIndex: 0,
+              initialIndex: 0, // Home page
             ),
         '/cart': (context) => MyHomePage(
               initialIndex: 1,
@@ -66,7 +66,8 @@ class MyApp extends StatelessWidget {
         '/profile': (context) => MyHomePage(
               initialIndex: 3,
             ),
-        '/home': (context) => const HomeScreen(),
+        // '/home': (context) => const HomeScreen(), // delete later
+
         '/login': (context) => const LoginScreen(),
         '/signup': (context) => const SignUpScreen()
       },

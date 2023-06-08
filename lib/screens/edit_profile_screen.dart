@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:mad_app/components/bottom_nav_bar_other_pgs.dart';
 import 'package:mad_app/components/input_widgets/text_input_field.dart';
 
 import '../components/botton_nav_bar_stateless.dart';
@@ -251,7 +252,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavBarStateless(),
+      bottomNavigationBar: BottomNavBarOtherPgs(),
     );
   }
 }
