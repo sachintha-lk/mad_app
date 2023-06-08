@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:mad_app/screens/cart_screen.dart';
@@ -12,10 +13,12 @@ import 'package:mad_app/screens/product_screen.dart';
 import 'package:mad_app/screens/profile.dart';
 import 'package:mad_app/screens/signup_screen.dart';
 
+import 'components/drawer.dart';
 import 'themes/color_schemes.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.landscapeLeft,
@@ -68,8 +71,8 @@ class MyApp extends StatelessWidget {
             ),
         // '/home': (context) => const HomeScreen(), // delete later
 
-        '/login': (context) => const LoginScreen(),
-        '/signup': (context) => const SignUpScreen()
+        '/login': (context) => LoginScreen(),
+        '/signup': (context) => SignUpScreen()
       },
     );
   }
@@ -116,143 +119,7 @@ class _MyHomePageState extends State<MyHomePage> {
         title: const Text("Terra Cart"),
         centerTitle: true,
       ),
-      drawer: Drawer(
-        // Add a ListView to the drawer. This ensures the user can scroll
-        // through the options in the drawer if there isn't enough vertical
-        // space to fit everything.
-        backgroundColor: const Color(0xFF501261),
-        child: ListView(
-          // Important: Remove any padding from the ListView.
-          padding: const EdgeInsets.fromLTRB(20, 2, 2, 10),
-          children: [
-            DrawerHeader(
-              decoration: const BoxDecoration(
-                border: Border(
-                  bottom: BorderSide.none,
-                ),
-              ),
-              child: Row(
-                children: [
-                  Image.asset(
-                    'lib/images/logo-terracart.png',
-                    height: 70,
-                    width: 70,
-                  ),
-                  // add google font k2d
-
-                  Text(
-                    'TerraCart',
-                    style: TextStyle(
-                      fontSize: 30,
-                      color: Theme.of(context).brightness == Brightness.light
-                          ? Colors.purple
-                          : Colors.white,
-                      fontFamily: 'K2D',
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            ListTile(
-              title: const Row(
-                children: [
-                  Icon(
-                    Icons.article,
-                    color: Colors.white,
-                    size: 32,
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text('Orders',
-                      style: TextStyle(fontSize: 20, color: Colors.white)),
-                ],
-              ),
-              onTap: () {
-                // Update the state of the app
-                // Navigator.popAndPushNamed(context, '/signup');
-                // Then close the drawer
-                // Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              title: const Row(
-                children: [
-                  Icon(
-                    Icons.shopping_cart_outlined,
-                    color: Colors.white,
-                    size: 32,
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text('Cart',
-                      style: TextStyle(fontSize: 20, color: Colors.white)),
-                ],
-              ),
-              onTap: () {
-                // Update the state of the app
-                // Navigator.popAndPushNamed(context, '/signup');
-                // Then close the drawer
-                // Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              title: const Row(
-                children: [
-                  Icon(
-                    Icons.person_outline_outlined,
-                    color: Colors.white,
-                    size: 32,
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text('Profile',
-                      style: TextStyle(fontSize: 20, color: Colors.white)),
-                ],
-              ),
-              onTap: () {
-                // Update the state of the app
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => MyHomePage(
-                            initialIndex: 2))); // Then close the drawer
-                // Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              title: const Row(
-                children: [
-                  Icon(
-                    Icons.person,
-                    color: Colors.white,
-                  ),
-                  Text('Sign Up',
-                      style: TextStyle(fontSize: 20, color: Colors.white)),
-                ],
-              ),
-              onTap: () {
-                // Update the state of the app
-                Navigator.popAndPushNamed(context, '/signup');
-                // Then close the drawer
-                // Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              title: const Text('Login'),
-              onTap: () {
-                // Update the state of the app
-                // Navigator.pushNamed(context, '/login');
-                Navigator.popAndPushNamed(context, '/login');
-                // Then close the drawer
-                // Navigator.pop(context);
-              },
-            ),
-          ],
-        ),
-      ),
+      drawer: MyDrawer(),
       // body: _screens[_currentIndex],
       // body: ProductScreen(),
 

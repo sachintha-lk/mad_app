@@ -6,9 +6,13 @@ import 'package:flutter/material.dart';
 class TextInputField extends StatefulWidget {
   final String label;
   final TextEditingController controller;
+  var obscureText = false;
 
-  const TextInputField(
-      {super.key, required this.label, required this.controller});
+  TextInputField(
+      {super.key,
+      required this.label,
+      required this.controller,
+      this.obscureText = false});
 
   @override
   State<TextInputField> createState() => _TextInputFieldState();
@@ -23,6 +27,7 @@ class _TextInputFieldState extends State<TextInputField> {
         height: 50,
         child: TextField(
           controller: widget.controller,
+          obscureText: widget.obscureText,
           decoration: InputDecoration(
             labelText: widget.label,
             border: const OutlineInputBorder(),

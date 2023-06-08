@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "821793019389",
+    "project_id": "terra-cart-mad-app",
+    "storage_bucket": "terra-cart-mad-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:821793019389:android:0f26471fef7c8e928a7594",
+        "android_client_info": {
+          "package_name": "com.example.mad_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "821793019389-3fqrjbvl0d7973k22ltqaaqns4if2lua.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDs16zRZa_fX71g_rMpbVWszJo-mb3Z1NI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "821793019389-3b2fefbtmb5da3j9lr7srkr4dbll2k54.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

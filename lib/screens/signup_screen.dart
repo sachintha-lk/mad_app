@@ -1,12 +1,75 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter/src/widgets/framework.dart';
 // import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 
-class SignUpScreen extends StatelessWidget {
-  const SignUpScreen({super.key});
+import '../components/input_widgets/text_input_field.dart';
+
+class SignUpScreen extends StatefulWidget {
+  SignUpScreen({super.key});
 
   @override
+  State<SignUpScreen> createState() => _SignUpScreenState();
+}
+
+class _SignUpScreenState extends State<SignUpScreen> {
+  final _emailTextController = TextEditingController();
+
+  final _passwordTextController = TextEditingController();
+
+  final _confirmPasswordTextController = TextEditingController();
+
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  String _errorMessage = '';
+
+  // if user is signed in Already, go to home screen
+  @override
+  void initState() {
+    super.initState();
+    _auth.authStateChanges().listen((User? user) {
+      if (user != null) {
+        Navigator.pushNamed(context, '/');
+      }
+    });
+  }
+
+
+  @override
+  void dispose() {
+    _emailTextController.dispose();
+    _passwordTextController.dispose();
+    _confirmPasswordTextController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _signUp() async {
+    print("Sign up");
+    try {
+      if (_passwordTextController.text != _confirmPasswordTextController.text) {
+        throw Exception("Passwords do not match");
+      }
+
+      final UserCredential result = await _auth.createUserWithEmailAndPassword(
+        email: _emailTextController.text,
+        password: _passwordTextController.text,
+      );
+
+      User? user = result.user;
+      print('Registered user: ${user?.email}');
+
+      // Success - go to home screen
+      Navigator.pushNamed(context, '/');
+    } catch (e) {
+      // Registration failed, handle the error
+      setState(() {
+        _errorMessage = e.toString();
+      });
+      print('Error: $_errorMessage');
+    }
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
@@ -22,40 +85,51 @@ class SignUpScreen extends StatelessWidget {
                   children: <Widget>[
                     Center(
                       child: Container(
-                        child: const Text(
+                        child: Text(
                           'Sign Up',
                           style: TextStyle(
                             fontSize: 30,
                             fontWeight: FontWeight.bold,
-                            color: Color.fromARGB(255, 82, 1, 126),
+                            color:
+                                Theme.of(context).brightness == Brightness.dark
+                                    ? Colors.white
+                                    : Color.fromARGB(255, 82, 1, 126),
                           ),
                         ),
                       ),
                     ),
-                    const Padding(
-                        padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
-                        child: TextField(
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: 'Email',
+                    SizedBox(height: 20),
+                    if (_errorMessage.isNotEmpty)
+                      Center(
+                        child: Container(
+                          child: Text(
+                            _errorMessage,
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.red,
+                            ),
                           ),
+                        ),
+                      ),
+                    Padding(
+                        padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
+                        child: TextInputField(
+                          label: 'Email',
+                          controller: _emailTextController,
                         )),
-                    const Padding(
+                    Padding(
                         padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
-                        child: TextField(
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: 'Password',
-                          ),
+                        child: TextInputField(
+                          label: 'Password',
+                          controller: _passwordTextController,
                           obscureText: true,
                         )),
-                    const Padding(
+                    Padding(
                         padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
-                        child: TextField(
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: 'Confirm Password',
-                          ),
+                        child: TextInputField(
+                          label: 'Confirm Password',
+                          controller: _confirmPasswordTextController,
                           obscureText: true,
                         )),
                     FilledButton(
@@ -65,8 +139,11 @@ class SignUpScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(8.0),
                         ),
                       )),
-                      onPressed: () {},
-                      child: const Text('Sign Up'),
+                      onPressed: _signUp,
+                      child: const Text(
+                        'Sign Up',
+                        style: TextStyle(color: Colors.white, fontSize: 16),
+                      ),
                     ),
                     const SizedBox(
                       height: 10,
@@ -89,7 +166,8 @@ class SignUpScreen extends StatelessWidget {
                       onPressed: () {
                         Navigator.pushNamed(context, '/login');
                       },
-                      child: const Text('Login'),
+                      child: const Text('Login',
+                          style: TextStyle(color: Colors.white, fontSize: 16)),
                     ),
                     const Center(
                       child: Padding(

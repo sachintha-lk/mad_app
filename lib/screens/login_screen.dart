@@ -6,13 +6,20 @@ import 'package:flutter_signin_button/flutter_signin_button.dart';
 import '../components/input_widgets/text_input_field.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+  LoginScreen({super.key});
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final _formKey = GlobalKey<FormState>();
+
+  final _emailTextController = TextEditingController();
+  final _passwordTextController = TextEditingController();
+
+  // final _focusEmail = FocusNode();
+  // final _focusPassword = FocusNode();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,25 +31,39 @@ class _LoginScreenState extends State<LoginScreen> {
             child: ListView(
               padding: const EdgeInsets.all(8),
               children: <Widget>[
+                const SizedBox(
+                  height: 100,
+                ),
                 Center(
                   child: Container(
-                    child: const Text(
+                    child: Text(
                       'Login',
                       style: TextStyle(
                         fontSize: 30,
                         fontWeight: FontWeight.bold,
-                        color: Color.fromARGB(255, 82, 1, 126),
+                        color: Theme.of(context).brightness == Brightness.dark
+                            ? Colors.white
+                            : Color.fromARGB(255, 82, 1, 126),
+                        // color: Color.fromARGB(255, 82, 1, 126),
                       ),
                     ),
                   ),
                 ),
-                TextInputField(
-                  label: 'Email',
-                  controller: TextEditingController(),
-                ),
-                TextInputField(
-                  label: 'Password',
-                  controller: TextEditingController(),
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      TextInputField(
+                        label: 'Email',
+                        controller: _emailTextController,
+                      ),
+                      TextInputField(
+                        label: 'Password',
+                        controller: _passwordTextController,
+                        obscureText: true,
+                      ),
+                    ],
+                  ),
                 ),
                 FilledButton(
                   style: ButtonStyle(
@@ -54,7 +75,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   onPressed: () {
                     // alert box hello world
                   },
-                  child: const Text('Login'),
+                  child: const Text(
+                    'Login',
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ),
                 const SizedBox(
                   height: 10,
