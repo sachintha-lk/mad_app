@@ -1,0 +1,92 @@
+[
+    {
+      "id": 1,
+      "name": "Nike Red Shoes",
+      "rating": 4.2,
+      "price": 1000,
+      "description": "The best shoes in the market for running",
+      "noInStock": 10,
+      "isFeatured": true
+    },
+    {
+      "id": 2,
+      "name": "Adidas Blue Sneakers",
+      "rating": 4.5,
+      "price": 850,
+      "description": "Stylish and comfortable sneakers for everyday wear",
+      "noInStock": 5,
+      "isFeatured": false
+    },
+    {
+      "id": 3,
+      "name": "Puma Black Running Shoes",
+      "rating": 4.0,
+      "price": 950,
+      "description": "Sleek design and excellent performance for runners",
+      "noInStock": 7,
+      "isFeatured": false
+    },
+    {
+      "id": 4,
+      "name": "Reebok White Tennis Shoes",
+      "rating": 4.8,
+      "price": 1200,
+      "description": "Ideal shoes for playing tennis with superior grip",
+      "noInStock": 3,
+      "isFeatured": false
+    },
+    {
+      "id": 5,
+      "name": "New Balance Gray Cross Trainers",
+      "rating": 4.3,
+      "price": 900,
+      "description": "Versatile shoes suitable for various workouts",
+      "noInStock": 9,
+      "isFeatured": true
+    },
+    {
+      "id": 6,
+      "name": "Under Armour Black Football Cleats",
+      "rating": 4.6,
+      "price": 1500,
+      "description": "High-performance cleats for professional football players",
+      "noInStock": 2,
+      "isFeatured": true
+    },
+    {
+      "id": 7,
+      "name": "Vans Checkerboard Slip-Ons",
+      "rating": 4.4,
+      "price": 700,
+      "description": "Classic slip-on shoes with a stylish checkerboard pattern",
+      "noInStock": 8,
+      "isFeatured": false
+    },
+    {
+      "id": 8,
+      "name": "Converse Chuck Taylor All Star",
+      "rating": 4.1,
+      "price": 800,
+      "description": "Iconic and timeless sneakers for casual everyday wear",
+      "noInStock": 6,
+      "isFeatured": false
+    },
+    {
+      "id": 9,
+      "name": "Salomon Speedcross Trail Running Shoes",
+      "rating": 4.7,
+      "price": 1100,
+      "description": "Aggressive grip and durable shoes for trail running enthusiasts",
+      "noInStock": 4,
+      "isFeatured": true
+    },
+    {
+      "id": 10,
+      "name": "Mizuno Wave Rider Running Shoes",
+      "rating": 4.3,
+      "price": 950,
+      "description": "Smooth and responsive shoes for long-distance runners",
+      "noInStock": 7,
+      "isFeatured": false
+    }
+  ]

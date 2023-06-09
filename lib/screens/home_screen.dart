@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mad_app/components/cards/category_card.dart';
 import 'package:mad_app/components/cards/product_item_card.dart';
+import 'package:flutter_layout_grid/flutter_layout_grid.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({
@@ -67,37 +68,18 @@ class HomeScreen extends StatelessWidget {
                       : 6,
               childAspectRatio: 1.0,
             ),
-            children: const [
-              CategoryCard(
-                categoryId: '1',
-                categoryName: 'Electronics',
-                categoryImg: 'img1',
-              ),
-              CategoryCard(
-                categoryId: '1',
-                categoryName: 'Electronics',
-                categoryImg: 'img1',
-              ),
-              CategoryCard(
-                categoryId: '1',
-                categoryName: 'Electronics',
-                categoryImg: 'img1',
-              ),
-              CategoryCard(
-                categoryId: '1',
-                categoryName: 'Electronics',
-                categoryImg: 'img1',
-              ),
-              CategoryCard(
-                categoryId: '1',
-                categoryName: 'Electronics',
-                categoryImg: 'img1',
-              ),
-              CategoryCard(
-                categoryId: '1',
-                categoryName: 'Electronics',
-                categoryImg: 'img1',
-              ),
+            children: [
+              Builder(builder: (context) {
+                return SizedBox(
+                  width: 135,
+                  height: 200,
+                  child: CategoryCard(
+                    categoryId: '1',
+                    categoryName: 'Electronics',
+                    categoryImg: 'img1',
+                  ),
+                );
+              }),
             ],
           ),
           Container(
@@ -117,14 +99,14 @@ class HomeScreen extends StatelessWidget {
               shrinkWrap: true,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 mainAxisSpacing: 10,
-                crossAxisSpacing: 15,
+                crossAxisSpacing: 1,
                 crossAxisCount:
                     MediaQuery.of(context).orientation == Orientation.portrait
                         ? 2
                         : 4,
-                childAspectRatio: 1 / 1.4,
+                childAspectRatio: 135 / 200,
               ),
-              padding: const EdgeInsets.all(10),
+              // padding: const EdgeInsets.all(10),
               physics: const NeverScrollableScrollPhysics(),
               itemCount: 10,
               itemBuilder: (context, index) {
@@ -137,7 +119,7 @@ class HomeScreen extends StatelessWidget {
                 );
               },
             ),
-          )
+          ),
         ],
       ),
     );

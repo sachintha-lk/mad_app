@@ -51,6 +51,7 @@ dependencies:
   firebase_core: ^2.13.1
   camera: ^0.10.5+2
   image_picker: ^0.8.7+5
+  flutter_layout_grid: ^2.0.3
 
 
 

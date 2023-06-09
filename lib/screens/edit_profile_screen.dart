@@ -26,9 +26,6 @@ class EditProfileScreen extends StatefulWidget {
 }
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
-  
-
-
   final ImagePicker _picker = ImagePicker();
   File? _image;
 
@@ -90,7 +87,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     radius: Orientation.portrait ==
                             MediaQuery.of(context).orientation
                         ? 50
-                        : 25,
+                        : 30,
                     backgroundImage:
                         _image != null ? FileImage(File(_image!.path)) : null,
                   ),
