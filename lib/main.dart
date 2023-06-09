@@ -115,10 +115,6 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Terra Cart"),
-        centerTitle: true,
-      ),
       drawer: MyDrawer(),
       // body: _screens[_currentIndex],
       // body: ProductScreen(),

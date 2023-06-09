@@ -19,6 +19,10 @@ class ProductItemCard extends StatelessWidget {
 
   String formatPrice(double price) {
     final formatter = NumberFormat.currency(decimalDigits: 2, symbol: '');
+    // if type of price is int, convert to double
+    if (price is int) {
+      price = price.toDouble();
+    }
     return formatter.format(price);
   }
 
@@ -28,8 +32,8 @@ class ProductItemCard extends StatelessWidget {
 
     return Card(
       child: SizedBox(
-        height: 200,
-        width: 135,
+        height: 250,
+        width: 155,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -51,20 +55,20 @@ class ProductItemCard extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.fromLTRB(13, 10, 13, 2),
               child: SizedBox(
-                height: 80,
+                height: 120,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     SizedBox(
-                      height: 40,
+                      height: 70,
                       child: Text(
                         productName,
                         overflow: TextOverflow.ellipsis,
-                        maxLines: 2,
+                        maxLines: 3,
                         style: const TextStyle(
-                          fontSize: 14,
+                          fontSize: 16,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
@@ -76,13 +80,13 @@ class ProductItemCard extends StatelessWidget {
                         color: Colors.amber,
                       ),
                       itemCount: 5,
-                      itemSize: 17,
+                      itemSize: 19,
                       direction: Axis.horizontal,
                     ),
                     Text(
                       'LKR $formattedProductPrice',
                       style: const TextStyle(
-                        fontSize: 14,
+                        fontSize: 15,
                         fontWeight: FontWeight.w500,
                       ),
                     ),

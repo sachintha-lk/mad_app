@@ -96,6 +96,10 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin {
     var formattedCartTotal = formatPrice(cartTotal);
 
     return Scaffold(
+      appBar: AppBar(
+        title: const Text("Cart"),
+        centerTitle: true,
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [

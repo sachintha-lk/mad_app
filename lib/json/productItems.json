@@ -3,7 +3,7 @@
       "id": 1,
       "name": "Nike Red Shoes",
       "rating": 4.2,
-      "price": 1000,
+      "price": 1020,
       "description": "The best shoes in the market for running",
       "noInStock": 10,
       "isFeatured": true

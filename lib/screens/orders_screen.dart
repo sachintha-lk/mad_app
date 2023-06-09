@@ -12,29 +12,35 @@ class OrdersScreen extends StatefulWidget {
 class _OrdersScreenState extends State<OrdersScreen> {
   @override
   Widget build(BuildContext context) {
-    return const DefaultTabController(
-      length: 2,
-      child: Column(
-        children: [
-          Text(
-            'Orders',
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-          ),
-          TabBar(
-            tabs: [
-              Tab(text: 'Pending Shipment'),
-              Tab(text: 'Shipped'),
-            ],
-          ),
-          Expanded(
-            child: TabBarView(
-              children: [
-                PendingOrders(),
-                ShippedOrders(),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Orders"),
+        centerTitle: true,
+      ),
+      body: const DefaultTabController(
+        length: 2,
+        child: Column(
+          children: [
+            Text(
+              'Orders',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            TabBar(
+              tabs: [
+                Tab(text: 'Pending Shipment'),
+                Tab(text: 'Shipped'),
               ],
             ),
-          ),
-        ],
+            Expanded(
+              child: TabBarView(
+                children: [
+                  PendingOrders(),
+                  ShippedOrders(),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
