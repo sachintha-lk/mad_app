@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 // import 'package:flutter/src/widgets/framework.dart';
 // import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 
 import '../components/input_widgets/text_input_field.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class LoginScreen extends StatefulWidget {
   LoginScreen({super.key});
@@ -20,7 +22,72 @@ class _LoginScreenState extends State<LoginScreen> {
 
   // final _focusEmail = FocusNode();
   // final _focusPassword = FocusNode();
+
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  String _errorMessage = '';
+
   @override
+  void dispose() {
+    _emailTextController.dispose();
+    _passwordTextController.dispose();
+    // _focusEmail.dispose();
+    // _focusPassword.dispose();
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    // _focusEmail.addListener(() {
+    //   setState(() {});
+    // });
+    // _focusPassword.addListener(() {
+    //   setState(() {});
+    // });
+
+    User? user = _auth.currentUser;
+
+    if (user != null) {
+      SchedulerBinding.instance.addPostFrameCallback((_) {
+        Navigator.pushNamed(context, '/');
+      });
+    }
+  }
+
+  void _signin() async {
+    try {
+      final UserCredential result = await _auth.signInWithEmailAndPassword(
+        email: _emailTextController.text,
+        password: _passwordTextController.text,
+      );
+
+      User? user = result.user;
+      print('User: $user');
+
+      if (user != null) {
+        Navigator.popAndPushNamed(context, '/');
+      }
+    } on FirebaseAuthException catch (e) {
+      if (mounted && e.code == 'user-not-found') {
+        setState(() {
+          _errorMessage = 'No user found for that email.';
+        });
+      } else if (mounted && e.code == 'wrong-password') {
+        setState(() {
+          _errorMessage = 'Wrong password provided for that user.';
+        });
+      } else {
+        if (mounted) {
+          setState(() {
+            _errorMessage = e.message.toString();
+          });
+          print('Error: $_errorMessage');
+        }
+      }
+    }
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
@@ -49,6 +116,20 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                 ),
+                SizedBox(height: 20),
+                if (_errorMessage.isNotEmpty)
+                  Center(
+                    child: Container(
+                      child: Text(
+                        _errorMessage,
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.red,
+                        ),
+                      ),
+                    ),
+                  ),
                 Form(
                   key: _formKey,
                   child: Column(
@@ -72,9 +153,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       borderRadius: BorderRadius.circular(8.0),
                     ),
                   )),
-                  onPressed: () {
-                    // alert box hello world
-                  },
+                  onPressed: _signin,
                   child: const Text(
                     'Login',
                     style: TextStyle(color: Colors.white),

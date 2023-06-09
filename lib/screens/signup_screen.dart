@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 // import 'package:flutter/src/widgets/framework.dart';
 // import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
@@ -28,13 +29,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   void initState() {
     super.initState();
-    _auth.authStateChanges().listen((User? user) {
-      if (user != null) {
-        Navigator.pushNamed(context, '/');
-      }
-    });
-  }
+    User? user = _auth.currentUser;
 
+    if (user != null) {
+      SchedulerBinding.instance.addPostFrameCallback((_) {
+        Navigator.pushNamed(context, '/');
+      });
+    }
+  }
 
   @override
   void dispose() {
@@ -60,7 +62,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
       print('Registered user: ${user?.email}');
 
       // Success - go to home screen
-      Navigator.pushNamed(context, '/');
+      if (user != null) {
+        Navigator.popAndPushNamed(context, '/');
+      }
     } catch (e) {
       // Registration failed, handle the error
       setState(() {

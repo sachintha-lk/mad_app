@@ -1,19 +1,56 @@
+import 'dart:io';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mad_app/components/bottom_nav_bar_other_pgs.dart';
 import 'package:mad_app/components/input_widgets/text_input_field.dart';
+import 'package:camera/camera.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../components/botton_nav_bar_stateless.dart';
 
 class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({super.key});
 
+  // String name;
+  // String email;
+  // String contactno;
+  // String houseno;
+  // String street;
+  // String city;
+  // String postalCode;
+
   @override
   State<EditProfileScreen> createState() => _EditProfileScreenState();
 }
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
+  
+
+
+  final ImagePicker _picker = ImagePicker();
+  File? _image;
+
+  Future<void> _takePhotoWithCamera() async {
+    try {
+      final XFile? image =
+          await ImagePicker().pickImage(source: ImageSource.camera);
+
+      if (image == null) {
+        return;
+      }
+
+      final imageTemporary = File(image.path);
+
+      setState(() {
+        _image = imageTemporary;
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,12 +84,21 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   : 0,
             ),
             Center(
-              child: CircleAvatar(
-                radius:
-                    Orientation.portrait == MediaQuery.of(context).orientation
+              child: Column(
+                children: [
+                  CircleAvatar(
+                    radius: Orientation.portrait ==
+                            MediaQuery.of(context).orientation
                         ? 50
                         : 25,
-                // backgroundImage: AssetImage('assets/images/profile.png'),
+                    backgroundImage:
+                        _image != null ? FileImage(File(_image!.path)) : null,
+                  ),
+                  IconButton(
+                    onPressed: _takePhotoWithCamera,
+                    icon: const Icon(Icons.camera_alt),
+                  ),
+                ],
               ),
             ),
             SizedBox(

@@ -14,6 +14,8 @@ class MyDrawer extends StatefulWidget {
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
+var isUserLoggedInBool = _auth.currentUser != null;
+
 Future<void> _signOut() async {
   await _auth.signOut();
 }
@@ -23,6 +25,18 @@ bool isUserLoggedIn() {
 }
 
 class _MyDrawerState extends State<MyDrawer> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _auth.authStateChanges().listen((User? user) {
+      if (user == null) {
+        // Navigator.popAndPushNamed(context, '/login');  // for app to work even after logout out im commenting this
+        isUserLoggedIn();
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -169,7 +183,16 @@ class LoginSignupWidget extends StatelessWidget {
           },
         ),
         ListTile(
-          title: const Text('Login'),
+          title: Row(
+            children: [
+              Icon(
+                Icons.login,
+                color: Colors.white,
+              ),
+              Text('Login',
+                  style: TextStyle(fontSize: 20, color: Colors.white)),
+            ],
+          ),
           onTap: () {
             // Update the state of the app
             // Navigator.pushNamed(context, '/login');
@@ -191,7 +214,15 @@ class LogoutWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: const Text('Logout'),
+      title: Row(
+        children: [
+          Icon(
+            Icons.logout,
+            color: Colors.white,
+          ),
+          Text('Sign Out', style: TextStyle(fontSize: 20, color: Colors.white)),
+        ],
+      ),
       onTap: _signOut,
     );
   }
