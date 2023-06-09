@@ -5,6 +5,7 @@
       "rating": 4.2,
       "price": 1020,
       "description": "The best shoes in the market for running",
+      "image":"lib/images/product_imgs/nike.png",
       "noInStock": 10,
       "isFeatured": true
     },
@@ -13,6 +14,7 @@
       "name": "Adidas Blue Sneakers",
       "rating": 4.5,
       "price": 850,
+      "image":"lib/images/product_imgs/blue-shoes.png",
       "description": "Stylish and comfortable sneakers for everyday wear",
       "noInStock": 5,
       "isFeatured": false
@@ -22,6 +24,7 @@
       "name": "Puma Black Running Shoes",
       "rating": 4.0,
       "price": 950,
+      "image":"lib/images/product_imgs/puma.png",
       "description": "Sleek design and excellent performance for runners",
       "noInStock": 7,
       "isFeatured": false
@@ -31,6 +34,7 @@
       "name": "Reebok White Tennis Shoes",
       "rating": 4.8,
       "price": 1200,
+      "image":"lib/images/product_imgs/white-tennis.png",
       "description": "Ideal shoes for playing tennis with superior grip",
       "noInStock": 3,
       "isFeatured": false
@@ -40,6 +44,7 @@
       "name": "New Balance Gray Cross Trainers",
       "rating": 4.3,
       "price": 900,
+      "image":"lib/images/product_imgs/newbalance-grey-cross-trainers.png",
       "description": "Versatile shoes suitable for various workouts",
       "noInStock": 9,
       "isFeatured": true
@@ -49,6 +54,7 @@
       "name": "Under Armour Black Football Cleats",
       "rating": 4.6,
       "price": 1500,
+      "image":"lib/images/product_imgs/black-underarmour.png",
       "description": "High-performance cleats for professional football players",
       "noInStock": 2,
       "isFeatured": true
@@ -58,6 +64,7 @@
       "name": "Vans Checkerboard Slip-Ons",
       "rating": 4.4,
       "price": 700,
+      "image":"lib/images/product_imgs/vans-checkered.png",
       "description": "Classic slip-on shoes with a stylish checkerboard pattern",
       "noInStock": 8,
       "isFeatured": false
@@ -67,6 +74,7 @@
       "name": "Converse Chuck Taylor All Star",
       "rating": 4.1,
       "price": 800,
+      "image":"lib/images/product_imgs/converse.png",
       "description": "Iconic and timeless sneakers for casual everyday wear",
       "noInStock": 6,
       "isFeatured": false
@@ -76,6 +84,7 @@
       "name": "Salomon Speedcross Trail Running Shoes",
       "rating": 4.7,
       "price": 1100,
+      "image":"lib/images/product_imgs/salomon-running.png",
       "description": "Aggressive grip and durable shoes for trail running enthusiasts",
       "noInStock": 4,
       "isFeatured": true
@@ -85,6 +94,7 @@
       "name": "Mizuno Wave Rider Running Shoes",
       "rating": 4.3,
       "price": 950,
+      "image":"lib/images/product_imgs/wave-rider.png",
       "description": "Smooth and responsive shoes for long-distance runners",
       "noInStock": 7,
       "isFeatured": false

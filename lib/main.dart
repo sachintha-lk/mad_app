@@ -72,7 +72,8 @@ class MyApp extends StatelessWidget {
         // '/home': (context) => const HomeScreen(), // delete later
 
         '/login': (context) => LoginScreen(),
-        '/signup': (context) => SignUpScreen()
+        '/signup': (context) => SignUpScreen(),
+        '/product_details': (context) => ProductScreen(),
       },
     );
   }
@@ -115,7 +116,6 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: MyDrawer(),
       // body: _screens[_currentIndex],
       // body: ProductScreen(),
 

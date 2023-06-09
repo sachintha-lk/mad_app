@@ -5,6 +5,9 @@ import 'package:flutter/services.dart';
 import 'package:mad_app/components/cards/category_card.dart';
 import 'package:mad_app/components/cards/product_item_card.dart';
 import 'package:flutter_layout_grid/flutter_layout_grid.dart';
+import 'package:mad_app/screens/product_screen.dart';
+
+import '../components/drawer.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({
@@ -63,6 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
         title: const Text("Terra Cart"),
         centerTitle: true,
       ),
+      drawer: MyDrawer(),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -90,57 +94,79 @@ class _HomeScreenState extends State<HomeScreen> {
                     itemBuilder: (context, index) {
                       var featuredProduct = featuredProducts[index];
 
-                      return ProductItemCard(
-                        productName: featuredProduct['name'],
-                        productImg: 'lib/images/product_imgs/nike.png',
-                        // productPrice: product['price'],
-                        // if prodct price is int convert to double
-                        productPrice: featuredProduct['price'] is int
-                            ? (featuredProduct['price'] as int).toDouble()
-                            : featuredProduct['price'],
+                      return GestureDetector(
+                        // on tap navigate to product details page
 
-                        productRating:
-                            featuredProduct['rating'], // Set the product rating
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ProductScreen(
+                                name: featuredProduct['name'],
+                                price: featuredProduct['price'] is int
+                                    ? (featuredProduct['price'] as int)
+                                        .toDouble()
+                                    : featuredProduct['price'],
+                                rating: featuredProduct['rating'],
+                                description: featuredProduct['description'],
+                                image: featuredProduct['image'],
+                                noInStock: featuredProduct['noInStock'],
+                              ),
+                            ),
+                          );
+                        },
+                        child: ProductItemCard(
+                          productName: featuredProduct['name'],
+                          productImg: featuredProduct['image'],
+                          // productPrice: product['price'],
+
+                          // if prodct price is int convert to double
+                          productPrice: featuredProduct['price'] is int
+                              ? (featuredProduct['price'] as int).toDouble()
+                              : featuredProduct['price'],
+                          productRating: featuredProduct[
+                              'rating'], // Set the product rating
+                        ),
                       );
                     }),
               ),
             ),
-            Container(
-              alignment: Alignment.topLeft,
-              padding: const EdgeInsets.fromLTRB(20, 10, 0, 5),
-              child: const Text(
-                'Categories',
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ),
-            GridView(
-              shrinkWrap: true,
-              padding: const EdgeInsets.all(10),
-              physics: const NeverScrollableScrollPhysics(),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount:
-                    MediaQuery.of(context).orientation == Orientation.portrait
-                        ? 3
-                        : 6,
-                childAspectRatio: 1.0,
-              ),
-              children: [
-                Builder(builder: (context) {
-                  return SizedBox(
-                    width: 135,
-                    height: 200,
-                    child: CategoryCard(
-                      categoryId: '1',
-                      categoryName: 'Electronics',
-                      categoryImg: 'lib/images/product_imgs/nike.png',
-                    ),
-                  );
-                }),
-              ],
-            ),
+            // Container(
+            //   alignment: Alignment.topLeft,
+            //   padding: const EdgeInsets.fromLTRB(20, 10, 0, 5),
+            //   child: const Text(
+            //     'Categories',
+            //     style: TextStyle(
+            //       fontSize: 24,
+            //       fontWeight: FontWeight.w500,
+            //     ),
+            //   ),
+            // ),
+            // GridView(
+            //   shrinkWrap: true,
+            //   padding: const EdgeInsets.all(10),
+            //   physics: const NeverScrollableScrollPhysics(),
+            //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            //     crossAxisCount:
+            //         MediaQuery.of(context).orientation == Orientation.portrait
+            //             ? 3
+            //             : 6,
+            //     childAspectRatio: 1.0,
+            //   ),
+            //   children: [
+            //     Builder(builder: (context) {
+            //       return SizedBox(
+            //         width: 135,
+            //         height: 200,
+            //         child: CategoryCard(
+            //           categoryId: '1',
+            //           categoryName: 'Electronics',
+            //           categoryImg: 'lib/images/product_imgs/nike.png',
+            //         ),
+            //       );
+            //     }),
+            //   ],
+            // ),
             Container(
               alignment: Alignment.topLeft,
               padding: const EdgeInsets.fromLTRB(20, 10, 0, 5),
@@ -170,16 +196,39 @@ class _HomeScreenState extends State<HomeScreen> {
                 itemCount: products.length,
                 itemBuilder: (context, index) {
                   var product = products[index];
-                  return ProductItemCard(
-                    productName: product['name'],
-                    productImg: 'lib/images/product_imgs/nike.png',
-                    // productPrice: product['price'],
-                    // if prodct price is int convert to double
-                    productPrice: product['price'] is int
-                        ? (product['price'] as int).toDouble()
-                        : product['price'],
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ProductScreen(
+                            name: product['name'],
+                            price: product['price'] is int
+                                ? (product['price'] as int).toDouble()
+                                : product['price'],
+                            rating: product['rating'],
+                            description: product['description'],
+                            image: product['image'],
+                            noInStock: product['noInStock'],
+                          ),
+                        ),
+                      );
+                    },
+                    child: SizedBox(
+                      width: 135,
+                      child: ProductItemCard(
+                        productName: product['name'],
+                        productImg: product['image'],
+                        // productPrice: product['price'],
+                        // if prodct price is int convert to double
+                        productPrice: product['price'] is int
+                            ? (product['price'] as int).toDouble()
+                            : product['price'],
 
-                    productRating: product['rating'], // Set the product rating
+                        productRating:
+                            product['rating'], // Set the product rating
+                      ),
+                    ),
                   );
                 },
               ),

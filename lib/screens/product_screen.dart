@@ -1,14 +1,70 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:hive/hive.dart';
+import 'package:mad_app/components/bottom_nav_bar_other_pgs.dart';
+
+import 'cart_screen.dart';
 
 class ProductScreen extends StatefulWidget {
-  const ProductScreen({super.key});
+  const ProductScreen(
+      {super.key,
+      this.name = '',
+      this.price = 0.0,
+      this.rating = 0.0,
+      this.description = '',
+      this.image = 'lib/images/product_imgs/nike.png',
+      this.noInStock = 0});
+
+  final name;
+  final price;
+  final rating;
+  final description;
+  final image;
+  final noInStock;
 
   @override
   State<ProductScreen> createState() => _ProductScreenState();
 }
 
+int quantity = 0;
+
 class _ProductScreenState extends State<ProductScreen> {
+  @override
+  initState() {
+    super.initState();
+    print('werfghjtyhj ${widget.name} ${widget.description} ${widget.price} ');
+  }
+
+  _addToCart() async {
+    final cartBox = await Hive.box('cart');
+    if (quantity == 0) {
+      return;
+    }
+    cartBox.add(CartItem(
+      productName: widget.name,
+      unitPrice: widget.price,
+      quantity: quantity,
+      image: widget.image,
+    ));
+    print('added to cart');
+  }
+
+  _incrementQuantity() {
+    setState(() {
+      if (quantity < widget.noInStock) {
+        quantity++;
+      }
+    });
+  }
+
+  _decrementQuantity() {
+    setState(() {
+      if (quantity > 0) {
+        quantity--;
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,104 +79,144 @@ class _ProductScreenState extends State<ProductScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
-                "Nike Air Max 270",
+                widget.name,
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               ),
               SizedBox(
-                // height: 200,
-                // width: 100,
-                child: Image.asset(
-                  "lib/images/product_imgs/nike.png",
-                  fit: BoxFit.cover,
-                ),
+                height:
+                    MediaQuery.of(context).orientation == Orientation.portrait
+                        ? 20
+                        : 10,
               ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(0, 10, 0, 5),
-                child: Text(
-                  'LKR 1,500.00',
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              GridView(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount:
+                      MediaQuery.of(context).orientation == Orientation.portrait
+                          ? 1
+                          : 2,
+                  crossAxisSpacing: 30,
+                  mainAxisSpacing: 10,
                 ),
-              ),
-              // rating stars
-              RatingBarIndicator(
-                rating: 3,
-                itemBuilder: (context, index) => const Icon(
-                  Icons.star,
-                  color: Colors.amber,
-                ),
-                itemCount: 5,
-                itemSize: 26,
-                direction: Axis.horizontal,
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(0, 10, 0, 5),
-                child: Text(
-                  'Description',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(0, 0, 0, 5),
-                child: Text(
-                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod, nisl eget ultricies ultrices, nunc nisl ultricies nunc, eget ultricies nisl nisl eget nisl. Donec euismod, nisl eget ultricies ultrices, nunc nisl ultricies nunc, eget ultricies nisl nisl eget nisl.',
-                  style: TextStyle(fontSize: 16),
-                ),
-              ),
-
-              Padding(
-                padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
-                child: Text(
-                  '9 in stock',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                ),
-              ),
-
-              // row with add to cart btn and icrease item count
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  // add to cart btn
-                  SizedBox(
-                    width: 200,
-                    child: FilledButton(
-                      style: ButtonStyle(
-                          shape: MaterialStateProperty.all(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.0),
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: SizedBox(
+                        height: 100,
+                        child: Image.asset(
+                          widget.image,
+                          fit: BoxFit.cover,
                         ),
-                      )),
-                      onPressed: () {
-                        // alert box hello world
-                      },
-                      child: const Text(
-                        'Add to cart',
-                        style: TextStyle(fontSize: 16),
                       ),
                     ),
                   ),
-                  // increase item count
-                  Row(
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      IconButton(
-                        onPressed: () {},
-                        icon: const Icon(Icons.remove),
+                      // align left
+
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 10, 0, 5),
+                        child: Text(
+                          'LKR ${widget.price}',
+                          style: TextStyle(
+                              fontSize: 24, fontWeight: FontWeight.bold),
+                        ),
                       ),
-                      Text(
-                        '1',
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold),
+                      // rating stars
+                      RatingBarIndicator(
+                        rating: 3,
+                        itemBuilder: (context, index) => const Icon(
+                          Icons.star,
+                          color: Colors.amber,
+                        ),
+                        itemCount: 5,
+                        itemSize: 26,
+                        direction: Axis.horizontal,
                       ),
-                      IconButton(
-                        onPressed: () {},
-                        icon: const Icon(Icons.add),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
+                        child: Text(
+                          '${widget.noInStock} in stock',
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+
+                      // row with add to cart btn and icrease item count
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          // add to cart btn
+                          SizedBox(
+                            width: 200,
+                            child: FilledButton(
+                              style: ButtonStyle(
+                                  shape: MaterialStateProperty.all(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                              )),
+                              onPressed: () {
+                                _addToCart();
+                              },
+                              child: const Text(
+                                'Add to cart',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                          // increase item count
+                          Row(
+                            children: [
+                              IconButton(
+                                onPressed: _decrementQuantity,
+                                icon: const Icon(Icons.remove),
+                              ),
+                              Text(
+                                quantity.toString(),
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.bold),
+                              ),
+                              IconButton(
+                                onPressed: _incrementQuantity,
+                                icon: const Icon(Icons.add),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 10, 0, 5),
+                        child: Text(
+                          'Description',
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 0, 0, 5),
+                        child: Text(
+                          widget.description,
+                          style: TextStyle(fontSize: 16),
+                        ),
                       ),
                     ],
                   ),
                 ],
               ),
+
               Padding(
-                padding: const EdgeInsets.fromLTRB(0, 10, 0, 5),
+                padding: const EdgeInsets.fromLTRB(0, 0, 0, 5),
                 child: Text(
                   'Reviews',
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
@@ -159,13 +255,21 @@ class _ProductScreenState extends State<ProductScreen> {
                       Padding(
                         padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
                         child: Text(
-                          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod, nisl eget ultricies ultrices, nunc nisl ultricies nunc, eget ultricies nisl nisl eget nisl. Donec euismod, nisl eget ultricies ultrices, nunc nisl ultricies nunc, eget ultricies nisl nisl eget nisl.',
+                          "This is the best product I've ever bought from this store. I'm really happy with the quality of the product. I would recommend this product to anyone who's looking for a good quality product.",
                           style: TextStyle(fontSize: 16),
                         ),
                       ),
                       SizedBox(
+                        // height: Orientation.portrait == Orientation.portrait
+                        //     ? 100
+                        //     : 200,
+
+                        // width: Orientation.portrait == Orientation.portrait
+                        //     ? 100
+                        //     : 200,
+
                         height: 200,
-                        width: 100,
+                        width: 10,
                         child: Image.asset(
                           "lib/images/product_imgs/nike.png",
                           fit: BoxFit.cover,
@@ -208,7 +312,7 @@ class _ProductScreenState extends State<ProductScreen> {
                       Padding(
                         padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
                         child: Text(
-                          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod, nisl eget ultricies ultrices, nunc nisl ultricies nunc, eget ultricies nisl nisl eget nisl. Donec euismod, nisl eget ultricies ultrices, nunc nisl ultricies nunc, eget ultricies nisl nisl eget nisl.',
+                          'Running shoes are very comfortable and the quality is very good. I would recommend this product to anyone who is looking for a good quality product.',
                           style: TextStyle(fontSize: 16),
                         ),
                       ),
@@ -228,6 +332,7 @@ class _ProductScreenState extends State<ProductScreen> {
           ),
         ),
       ),
+      bottomNavigationBar: BottomNavBarOtherPgs(),
     );
   }
 }

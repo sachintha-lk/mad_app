@@ -5,6 +5,8 @@ import 'package:sqflite/sqflite.dart';
 import '../components/cards/cart_item_card.dart';
 import 'package:intl/intl.dart';
 
+import '../components/drawer.dart';
+
 class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
 
@@ -22,6 +24,8 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+    // deleteCartBox();
+    EmpyCartItems();
     // addDummyCartItems();
     fetchCartItems();
   }
@@ -100,6 +104,7 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin {
         title: const Text("Cart"),
         centerTitle: true,
       ),
+      drawer: MyDrawer(),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -114,6 +119,7 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin {
                     productName: cartItems[index].productName,
                     unitPrice: cartItems[index].unitPrice,
                     quantity: cartItems[index].quantity,
+                    productImage: cartItems[index].image,
                     onQuantityUpdated: (newQuantity) {
                       updateCartItemQuantity(index, newQuantity);
                     },
@@ -198,10 +204,14 @@ class CartItem extends HiveObject {
   @HiveField(2)
   int quantity;
 
+  @HiveField(3)
+  String image;
+
   CartItem({
     required this.productName,
     required this.unitPrice,
     required this.quantity,
+    required this.image,
   });
 }
 
@@ -215,6 +225,7 @@ class CartItemAdapter extends TypeAdapter<CartItem> {
       productName: reader.read(),
       unitPrice: reader.read(),
       quantity: reader.read(),
+      image: reader.read(),
     );
   }
 
@@ -223,6 +234,7 @@ class CartItemAdapter extends TypeAdapter<CartItem> {
     writer.write(obj.productName);
     writer.write(obj.unitPrice);
     writer.write(obj.quantity);
+    writer.write(obj.image);
   }
 }
 
@@ -233,14 +245,25 @@ void addDummyCartItems() async {
     productName: 'Product 1',
     unitPrice: 10.99,
     quantity: 2,
+    image: 'lib/images/product_imgs/nike.png',
   );
 
   CartItem item2 = CartItem(
     productName: 'Product 2',
     unitPrice: 15.99,
     quantity: 3,
+    image: 'lib/images/product_imgs/nike.png',
   );
 
   cartBox.add(item1);
   cartBox.add(item2);
+}
+
+void EmpyCartItems() async {
+  final cartBox = await Hive.openBox('cart');
+  cartBox.clear();
+}
+
+void deleteCartBox() async {
+  await Hive.deleteBoxFromDisk('cart');
 }

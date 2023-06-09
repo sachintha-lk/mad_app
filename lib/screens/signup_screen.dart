@@ -79,7 +79,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       appBar: AppBar(),
       body: Center(
         child: SizedBox(
-          height: 500,
+          height: 600,
           width: 350,
           child: Column(
             children: [
@@ -87,6 +87,28 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 child: ListView(
                   padding: const EdgeInsets.all(8),
                   children: <Widget>[
+                    Column(
+                      children: [
+                        Image.asset(
+                          'lib/images/logo-terracart.png',
+                          height: 70,
+                          width: 70,
+                        ),
+                        // add google font k2d
+
+                        Text(
+                          'TerraCart',
+                          style: TextStyle(
+                            fontSize: 30,
+                            color:
+                                Theme.of(context).brightness == Brightness.light
+                                    ? Colors.purple
+                                    : Colors.white,
+                            fontFamily: 'K2D',
+                          ),
+                        ),
+                      ],
+                    ),
                     Center(
                       child: Container(
                         child: Text(
@@ -173,20 +195,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       child: const Text('Login',
                           style: TextStyle(color: Colors.white, fontSize: 16)),
                     ),
-                    const Center(
-                      child: Padding(
-                        padding: EdgeInsets.fromLTRB(0, 20, 0, 8),
-                        child: Text("Or"),
-                      ),
-                    ),
-                    SignInButton(
-                      Buttons.Google,
-                      text: "Continue With Google",
-                      padding: const EdgeInsets.fromLTRB(0, 4, 0, 4),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.0)),
-                      onPressed: () {},
-                    ),
+                    // const Center(
+                    //   child: Padding(
+                    //     padding: EdgeInsets.fromLTRB(0, 20, 0, 8),
+                    //     child: Text("Or"),
+                    //   ),
+                    // ),
+                    // SignInButton(
+                    //   Buttons.Google,
+                    //   text: "Continue With Google",
+                    //   padding: const EdgeInsets.fromLTRB(0, 4, 0, 4),
+                    //   shape: RoundedRectangleBorder(
+                    //       borderRadius: BorderRadius.circular(8.0)),
+                    //   onPressed: () {},
+                    // ),
                   ],
                 ),
               ),

@@ -92,7 +92,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Expanded(
             child: ListView(
@@ -100,6 +100,30 @@ class _LoginScreenState extends State<LoginScreen> {
               children: <Widget>[
                 const SizedBox(
                   height: 100,
+                ),
+                Center(
+                  child: Column(
+                    children: [
+                      Image.asset(
+                        'lib/images/logo-terracart.png',
+                        height: 70,
+                        width: 70,
+                      ),
+                      // add google font k2d
+
+                      Text(
+                        'TerraCart',
+                        style: TextStyle(
+                          fontSize: 30,
+                          color:
+                              Theme.of(context).brightness == Brightness.light
+                                  ? Colors.purple
+                                  : Colors.white,
+                          fontFamily: 'K2D',
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
                 Center(
                   child: Container(
@@ -130,6 +154,12 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                   ),
+                SizedBox(
+                  width: 200,
+                  child: Column(
+                    children: [],
+                  ),
+                ),
                 Form(
                   key: _formKey,
                   child: Column(
@@ -180,22 +210,25 @@ class _LoginScreenState extends State<LoginScreen> {
                   onPressed: () {
                     Navigator.pushNamed(context, '/signup');
                   },
-                  child: const Text('Sign Up'),
+                  child: const Text('Sign Up',
+                      style: TextStyle(
+                        color: Colors.white,
+                      )),
                 ),
-                const Center(
-                  child: Padding(
-                    padding: EdgeInsets.fromLTRB(0, 20, 0, 8),
-                    child: Text("Or"),
-                  ),
-                ),
-                SignInButton(
-                  Buttons.Google,
-                  text: "Continue With Google",
-                  padding: const EdgeInsets.fromLTRB(0, 4, 0, 4),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.0)),
-                  onPressed: () {},
-                ),
+                // const Center(
+                //   child: Padding(
+                //     padding: EdgeInsets.fromLTRB(0, 20, 0, 8),
+                //     child: Text("Or"),
+                //   ),
+                // ),
+                // SignInButton(
+                //   Buttons.Google,
+                //   text: "Continue With Google",
+                //   padding: const EdgeInsets.fromLTRB(0, 4, 0, 4),
+                //   shape: RoundedRectangleBorder(
+                //       borderRadius: BorderRadius.circular(8.0)),
+                //   onPressed: () {},
+                // ),
               ],
             ),
           ),

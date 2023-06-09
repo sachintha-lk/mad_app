@@ -98,12 +98,15 @@ class _CartItemCardState extends State<CartItemCard> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(widget.productName,
-                        style: const TextStyle(
-                          overflow: TextOverflow.ellipsis,
-                          // fontSize: 14,
-                          // fontWeight: FontWeight.bold,
-                        )),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.4,
+                      child: Text(widget.productName,
+                          style: const TextStyle(
+                            overflow: TextOverflow.ellipsis,
+                            // fontSize: 14,
+                            // fontWeight: FontWeight.bold,
+                          )),
+                    ),
                     Text(
                       'Price: $formattedUnitPrice x ${widget.quantity} units',
                       style: TextStyle(
@@ -124,7 +127,7 @@ class _CartItemCardState extends State<CartItemCard> {
                   child: InkWell(
                     child: Icon(Icons.close),
                     onTap: () {
-                      // remove item from cart
+                      // remove item from cart hive box , calback?
                     },
                   ),
                 ),

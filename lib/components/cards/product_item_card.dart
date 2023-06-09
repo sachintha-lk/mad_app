@@ -42,9 +42,13 @@ class ProductItemCard extends StatelessWidget {
                 topLeft: Radius.circular(10.0),
                 topRight: Radius.circular(10.0),
               ),
-              child: Image.asset(
-                productImg,
-                fit: BoxFit.cover,
+              child: SizedBox(
+                height: 100,
+                width: 180,
+                child: Image.asset(
+                  productImg,
+                  fit: BoxFit.cover,
+                ),
               ),
               // child: Image.network(
               //     height: 100,
