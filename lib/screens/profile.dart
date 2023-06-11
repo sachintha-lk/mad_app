@@ -4,15 +4,36 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'edit_profile_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({super.key});
+  ProfileScreen({super.key});
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  late String name;
+  late String email;
+  late String phone;
+  late String homeNo;
+  late String street;
+  late String city;
+  late String country;
+  late String postalCode;
+
+  late String profilePicFilePath;
+
   @override
   Widget build(BuildContext context) {
+    name = 'John Doe';
+    email = 'johndoe@gmail.com';
+    phone = '1234567890';
+    homeNo = '123';
+    street = 'Main Street';
+    city = 'Colombo';
+    country = 'Sri Lanka';
+    postalCode = '12345';
+    profilePicFilePath = 'lib/images/product_img/nike.png';
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Profile"),
@@ -40,13 +61,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
               radius: Orientation.portrait == MediaQuery.of(context).orientation
                   ? 50
                   : 25,
-              // backgroundImage: AssetImage('assets/images/profile.png'),
+              backgroundImage: AssetImage(profilePicFilePath),
             ),
             SizedBox(
               height: 20,
             ),
             Text(
-              'John Doe',
+              name,
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             Card(
@@ -62,7 +83,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               // ),
               child: SizedBox(
                 width: MediaQuery.of(context).size.width * 0.9,
-                child: const Padding(
+                child: Padding(
                   padding: EdgeInsets.all(12.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -76,7 +97,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         textAlign: TextAlign.left,
                       ),
                       Text(
-                        'janedoe@example.com',
+                        email,
                         style: TextStyle(fontSize: 16),
                       ),
                       SizedBox(
@@ -91,7 +112,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         textAlign: TextAlign.left,
                       ),
                       Text(
-                        '+91 9876543210',
+                        phone,
                         style: TextStyle(fontSize: 16),
                       ),
                       SizedBox(
@@ -106,7 +127,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         textAlign: TextAlign.left,
                       ),
                       Text(
-                        ' 99,\n Example Street,\n Colombo,\n Sri Lanka - 0001',
+                        ' $homeNo,\n $street,\n $city,\n $country - $postalCode',
                         style: TextStyle(fontSize: 16),
                       ),
                       SizedBox(
@@ -169,7 +190,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => EditProfileScreen(),
+                      builder: (context) => EditProfileScreen(
+                        name: name,
+                        email: email,
+                        phone: phone,
+                        homeNo: homeNo,
+                        street: street,
+                        city: city,
+                        country: country,
+                        postalCode: postalCode,
+                        profilePicFilePath: profilePicFilePath,
+                      ),
                     ),
                   );
                 },

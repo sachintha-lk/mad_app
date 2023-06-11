@@ -11,22 +11,69 @@ import 'package:image_picker/image_picker.dart';
 import '../components/botton_nav_bar_stateless.dart';
 
 class EditProfileScreen extends StatefulWidget {
-  const EditProfileScreen({super.key});
-
-  // String name;
-  // String email;
-  // String contactno;
-  // String houseno;
-  // String street;
-  // String city;
-  // String postalCode;
+  final String name;
+  final String email;
+  final String phone;
+  final String homeNo;
+  final String street;
+  final String city;
+  final String country;
+  final String postalCode;
+  final String profilePicFilePath;
+  const EditProfileScreen({
+    super.key,
+    required this.name,
+    required this.email,
+    required this.phone,
+    required this.homeNo,
+    required this.street,
+    required this.city,
+    required this.country,
+    required this.postalCode,
+    required this.profilePicFilePath,
+  });
 
   @override
   State<EditProfileScreen> createState() => _EditProfileScreenState();
 }
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
-  final ImagePicker _picker = ImagePicker();
+  final _nameController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _phoneController = TextEditingController();
+  final _homeNoController = TextEditingController();
+  final _streetController = TextEditingController();
+  final _cityController = TextEditingController();
+  final _countryController = TextEditingController();
+  final _postcodeController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _nameController.text = widget.name;
+    _emailController.text = widget.email;
+    _phoneController.text = widget.phone;
+    _homeNoController.text = widget.homeNo;
+    _streetController.text = widget.street;
+    _cityController.text = widget.city;
+    _countryController.text = widget.country;
+    _postcodeController.text = widget.postalCode;
+  }
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _emailController.dispose();
+    _phoneController.dispose();
+    _homeNoController.dispose();
+    _streetController.dispose();
+    _cityController.dispose();
+    _countryController.dispose();
+    _postcodeController.dispose();
+    super.dispose();
+  }
+
+  // final ImagePicker _picker = ImagePicker();
   File? _image;
 
   Future<void> _takePhotoWithCamera() async {
@@ -101,15 +148,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             SizedBox(
               height: 20,
             ),
+            TextInputField(label: 'Name', controller: _nameController),
+            TextInputField(label: 'Email', controller: _emailController),
             TextInputField(
-                label: 'Name',
-                controller: TextEditingController(text: 'John Doe')),
-            TextInputField(
-                label: 'Email',
-                controller: TextEditingController(text: 'jane@example.com')),
-            TextInputField(
-                label: 'Contact Number',
-                controller: TextEditingController(text: '544544464')),
+                label: 'Contact Number', controller: _phoneController),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text('Address',
@@ -120,23 +162,23 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             ),
             TextInputField(
               label: 'House No',
-              controller: TextEditingController(),
+              controller: _homeNoController,
             ),
             TextInputField(
               label: 'Street  ',
-              controller: TextEditingController(),
+              controller: _streetController,
             ),
             TextInputField(
               label: 'City',
-              controller: TextEditingController(),
+              controller: _cityController,
             ),
             TextInputField(
               label: 'Country',
-              controller: TextEditingController(),
+              controller: _countryController,
             ),
             TextInputField(
               label: 'Postal Code',
-              controller: TextEditingController(),
+              controller: _postcodeController,
             ),
             SizedBox(
               height: 10,
