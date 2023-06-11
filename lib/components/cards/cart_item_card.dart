@@ -12,12 +12,14 @@ class CartItemCard extends StatefulWidget {
     required this.unitPrice,
     required this.quantity,
     required this.onQuantityUpdated,
+    required this.onRemoveItem,
   });
 
   final String productName;
   final String productImage;
   final double unitPrice;
   final Function(int) onQuantityUpdated;
+  final Function(String) onRemoveItem;
   int quantity;
 
   @override
@@ -128,22 +130,24 @@ class _CartItemCardState extends State<CartItemCard> {
                     child: Icon(Icons.close),
                     onTap: () {
                       // remove item from cart hive box , calback?
+
+                      widget.onRemoveItem(widget.productName);
                     },
                   ),
                 ),
                 Row(
                   children: [
                     IconButton(
-                      icon: const Icon(Icons.add),
+                      icon: const Icon(Icons.remove),
                       onPressed: () {
-                        _incrementQuantity();
+                        _decrementQuantity();
                       },
                     ),
                     Text(widget.quantity.toString()),
                     IconButton(
-                      icon: const Icon(Icons.remove),
+                      icon: const Icon(Icons.add),
                       onPressed: () {
-                        _decrementQuantity();
+                        _incrementQuantity();
                       },
                     ),
                   ],

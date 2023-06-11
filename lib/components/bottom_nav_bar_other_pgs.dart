@@ -13,7 +13,7 @@ class BottomNavBarOtherPgs extends StatefulWidget {
 }
 
 class _BottomNavBarOtherPgsState extends State<BottomNavBarOtherPgs> {
-  // int _selectedIndex = 0;
+  int _selectedIndex = -1;
 
   void _onTabTapped(int index) {
     // setState(() {
@@ -53,7 +53,7 @@ class _BottomNavBarOtherPgsState extends State<BottomNavBarOtherPgs> {
     return BottomNavigationBar(
       type: BottomNavigationBarType.fixed,
       selectedFontSize: 12,
-      selectedItemColor: Colors.white,
+      // selectedItemColor: Colors.white,
       onTap: _onTabTapped,
       items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(

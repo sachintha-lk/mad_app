@@ -95,6 +95,37 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin {
     });
   }
 
+  void remove_cart_item(int index, String productName) {
+    // confirm delete
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Remove $productName from cart?'),
+          content:
+              Text('Do you really want to remove $productName from your cart?'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                cartItems[index].delete(); // hive delete
+                cartItems.removeAt(index);
+                calculateCartTotal();
+              },
+              child: Text('Remove'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     var formattedCartTotal = formatPrice(cartTotal);
@@ -122,6 +153,9 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin {
                     productImage: cartItems[index].image,
                     onQuantityUpdated: (newQuantity) {
                       updateCartItemQuantity(index, newQuantity);
+                    },
+                    onRemoveItem: (productName) {
+                      remove_cart_item(index, productName);
                     },
                   );
                 },
