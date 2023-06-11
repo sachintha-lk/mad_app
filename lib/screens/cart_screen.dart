@@ -25,7 +25,7 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     // deleteCartBox();
-    EmpyCartItems();
+    // EmpyCartItems();
     // addDummyCartItems();
     fetchCartItems();
   }
