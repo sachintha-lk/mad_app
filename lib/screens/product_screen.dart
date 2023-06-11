@@ -32,11 +32,13 @@ class _ProductScreenState extends State<ProductScreen> {
   @override
   initState() {
     super.initState();
+    quantity = 0;
     print('werfghjtyhj ${widget.name} ${widget.description} ${widget.price} ');
   }
 
   _addToCart() async {
     final cartBox = await Hive.box('cart');
+
     if (quantity == 0) {
       return;
     }
@@ -46,6 +48,24 @@ class _ProductScreenState extends State<ProductScreen> {
       quantity: quantity,
       image: widget.image,
     ));
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Added to cart'),
+          content: Text('Added ${widget.name} to cart'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+
     print('added to cart');
   }
 
