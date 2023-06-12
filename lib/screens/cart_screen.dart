@@ -172,9 +172,13 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin {
         onClosing: () {},
         builder: (context) {
           return Container(
-            height: 100,
-            width: double.infinity,
-            child: Column(
+            height: MediaQuery.of(context).size.height * 0.15,
+            width: MediaQuery.of(context).size.width,
+            child: Flex(
+              direction:
+                  MediaQuery.of(context).orientation == Orientation.portrait
+                      ? Axis.vertical
+                      : Axis.horizontal,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
@@ -184,6 +188,12 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin {
                     children: [
                       Text(
                         'Total',
+                      ),
+                      SizedBox(
+                        width: MediaQuery.of(context).orientation ==
+                                Orientation.landscape
+                            ? 30
+                            : 0,
                       ),
                       Text(
                         'LKR $formattedCartTotal',

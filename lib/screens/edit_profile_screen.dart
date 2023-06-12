@@ -47,9 +47,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   final _countryController = TextEditingController();
   final _postcodeController = TextEditingController();
 
+  // final ImagePicker _picker = ImagePicker();
+  bool _is_profile_pic_from_camera = false;
+  File? _image;
+
   @override
   void initState() {
     super.initState();
+
     _nameController.text = widget.name;
     _emailController.text = widget.email;
     _phoneController.text = widget.phone;
@@ -59,6 +64,18 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     _countryController.text = widget.country;
     _postcodeController.text = widget.postalCode;
   }
+
+  // void loadImage() async {
+  //   var _imageFromString = await widget.profilePicFilePath.isNotEmpty
+  //       ? File(widget.profilePicFilePath)
+  //       : null;
+  //   print(
+  //       'widget.profilePicFilePath: ${widget.profilePicFilePath}  image: ${_image?.path}');
+
+  //   setState(() {
+  //     _image = _imageFromString;
+  //   });
+  // }
 
   @override
   void dispose() {
@@ -73,9 +90,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     super.dispose();
   }
 
-  // final ImagePicker _picker = ImagePicker();
-  File? _image;
-
   Future<void> _takePhotoWithCamera() async {
     try {
       final XFile? image =
@@ -89,6 +103,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
       setState(() {
         _image = imageTemporary;
+        _is_profile_pic_from_camera = true;
       });
     } catch (e) {
       print(e);
@@ -102,7 +117,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         title: const Text('Edit Profile'),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              _updateProfile(context);
+            },
             icon: const Icon(FontAwesomeIcons.check),
           ),
         ],
@@ -135,8 +152,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             MediaQuery.of(context).orientation
                         ? 50
                         : 30,
-                    backgroundImage:
-                        _image != null ? FileImage(File(_image!.path)) : null,
+                    backgroundImage: _is_profile_pic_from_camera
+                        ? (_image != null
+                            ? FileImage(File(_image!.path))
+                            : null)
+                        : AssetImage(widget.profilePicFilePath)
+                            as ImageProvider,
                   ),
                   IconButton(
                     onPressed: _takePhotoWithCamera,
@@ -145,6 +166,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 ],
               ),
             ),
+
             SizedBox(
               height: 20,
             ),
@@ -303,7 +325,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   ),
                 )),
                 onPressed: () {
-                  // alert box hello world
+                  _updateProfile(context);
                 },
                 child: const Text(
                   'Update Profile',
@@ -321,7 +343,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   ),
                 )),
                 onPressed: () {
-                  // alert box hello world
+                  Navigator.pop(context);
                 },
                 child: Text(
                   'Cancel',
@@ -338,6 +360,55 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         ),
       ),
       bottomNavigationBar: BottomNavBarOtherPgs(),
+    );
+  }
+
+  void _saveAndSendDataBack(BuildContext context) {
+    // check the profile pic and save it to the app directory
+    String profilePicFilePath = widget.profilePicFilePath;
+    if (_is_profile_pic_from_camera) {
+      profilePicFilePath = _image!.path;
+    }
+
+    // send the data back to the previous screen
+    final savedProfileData = {
+      'name': _nameController.text,
+      'email': _emailController.text,
+      'phone': _phoneController.text,
+      'homeNo': _homeNoController.text,
+      'street': _streetController.text,
+      'city': _cityController.text,
+      'country': _countryController.text,
+      'postalCode': _postcodeController.text,
+      'profilePicFilePath': profilePicFilePath,
+    };
+    Navigator.pop(context, savedProfileData);
+  }
+
+  void _updateProfile(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Update Profile'),
+          content: Text('Are you sure you want to update your profile?'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+                _saveAndSendDataBack(context);
+              },
+              child: Text('Update'),
+            ),
+          ],
+        );
+      },
     );
   }
 }

@@ -21,10 +21,10 @@ class _OrdersScreenState extends State<OrdersScreen> {
         length: 2,
         child: Column(
           children: [
-            Text(
-              'Orders',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
+            // Text(
+            //   'Orders',
+            //   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            // ),
             TabBar(
               tabs: [
                 Tab(text: 'Pending Shipment'),

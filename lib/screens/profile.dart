@@ -23,7 +23,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   late String profilePicFilePath;
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    super.initState();
     name = 'John Doe';
     email = 'johndoe@gmail.com';
     phone = '1234567890';
@@ -32,8 +33,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
     city = 'Colombo';
     country = 'Sri Lanka';
     postalCode = '12345';
-    profilePicFilePath = 'lib/images/product_img/nike.png';
+    profilePicFilePath = 'lib/images/product_imgs/nike.png';
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Profile"),
@@ -57,14 +61,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ? 20
                   : 0,
             ),
-            CircleAvatar(
-              radius: Orientation.portrait == MediaQuery.of(context).orientation
-                  ? 50
-                  : 25,
-              backgroundImage: AssetImage(profilePicFilePath),
+            Container(
+              child: CircleAvatar(
+                radius:
+                    Orientation.portrait == MediaQuery.of(context).orientation
+                        ? 50
+                        : 35,
+                backgroundImage: profilePicFilePath.isNotEmpty
+                    ? AssetImage(profilePicFilePath)
+                    : AssetImage('lib/images/profile_pic_placeholder.png'),
+              ),
             ),
+
             SizedBox(
-              height: 20,
+              height: Orientation.portrait == MediaQuery.of(context).orientation
+                  ? 20
+                  : 5,
             ),
             Text(
               name,
@@ -84,55 +96,76 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: SizedBox(
                 width: MediaQuery.of(context).size.width * 0.9,
                 child: Padding(
-                  padding: EdgeInsets.all(12.0),
+                  padding: MediaQuery.of(context).size.width > 600
+                      ? const EdgeInsets.fromLTRB(40, 20, 30, 40)
+                      : const EdgeInsets.all(10),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        'Email',
-                        style: TextStyle(
-                          fontSize: 17,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        textAlign: TextAlign.left,
+                      Flex(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        direction: MediaQuery.of(context).size.width > 600
+                            ? Axis.horizontal
+                            : Axis.vertical,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Email',
+                                style: TextStyle(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                textAlign: TextAlign.left,
+                              ),
+                              Text(
+                                email,
+                                style: TextStyle(fontSize: 16),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                'Contact Number',
+                                style: TextStyle(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                textAlign: TextAlign.left,
+                              ),
+                              Text(
+                                phone,
+                                style: TextStyle(fontSize: 16),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                            ],
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Address',
+                                style: TextStyle(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                textAlign: TextAlign.left,
+                              ),
+                              Text(
+                                ' $homeNo,\n $street,\n $city,\n $country - $postalCode',
+                                style: TextStyle(fontSize: 16),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
-                      Text(
-                        email,
-                        style: TextStyle(fontSize: 16),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        'Contact Number',
-                        style: TextStyle(
-                          fontSize: 17,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        textAlign: TextAlign.left,
-                      ),
-                      Text(
-                        phone,
-                        style: TextStyle(fontSize: 16),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        'Address',
-                        style: TextStyle(
-                          fontSize: 17,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        textAlign: TextAlign.left,
-                      ),
-                      Text(
-                        ' $homeNo,\n $street,\n $city,\n $country - $postalCode',
-                        style: TextStyle(fontSize: 16),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
+
                       Text(
                         'Payment Methods',
                         style: TextStyle(
@@ -187,22 +220,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                 )),
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => EditProfileScreen(
-                        name: name,
-                        email: email,
-                        phone: phone,
-                        homeNo: homeNo,
-                        street: street,
-                        city: city,
-                        country: country,
-                        postalCode: postalCode,
-                        profilePicFilePath: profilePicFilePath,
-                      ),
-                    ),
-                  );
+                  _showEditProfileScreen(context);
                 },
                 child: const Text(
                   'Edit Profile',
@@ -214,5 +232,38 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
       ),
     );
+  }
+
+  void _showEditProfileScreen(BuildContext context) async {
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => EditProfileScreen(
+          name: name,
+          email: email,
+          phone: phone,
+          homeNo: homeNo,
+          street: street,
+          city: city,
+          country: country,
+          postalCode: postalCode,
+          profilePicFilePath: profilePicFilePath,
+        ),
+      ),
+    );
+
+    if (result != null) {
+      setState(() {
+        name = result['name'];
+        email = result['email'];
+        phone = result['phone'];
+        homeNo = result['homeNo'];
+        street = result['street'];
+        city = result['city'];
+        country = result['country'];
+        postalCode = result['postalCode'];
+        profilePicFilePath = result['profilePicFilePath'];
+      });
+    }
   }
 }

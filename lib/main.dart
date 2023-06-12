@@ -144,7 +144,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ],
         currentIndex: _currentIndex,
-        selectedItemColor: Theme.of(context).colorScheme.primary,
+
         // onTap: _onTabTapped,
         onTap: _onTabTapped,
       ),
