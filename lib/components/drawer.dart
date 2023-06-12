@@ -67,7 +67,7 @@ class _MyDrawerState extends State<MyDrawer> {
                   'TerraCart',
                   style: TextStyle(
                     fontSize: 30,
-                    color: Color.fromARGB(255, 237, 150, 255),
+                    color: Colors.white,
                     fontFamily: 'K2D',
                   ),
                 ),

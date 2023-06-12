@@ -76,7 +76,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
       body: Center(
         child: SizedBox(
           height: 600,
@@ -96,17 +95,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                         // add google font k2d
 
-                        Text(
-                          'TerraCart',
-                          style: TextStyle(
-                            fontSize: 30,
-                            color:
-                                Theme.of(context).brightness == Brightness.light
-                                    ? Colors.purple
-                                    : Colors.white,
-                            fontFamily: 'K2D',
-                          ),
-                        ),
+                        // Text(
+                        //   'TerraCart',
+                        //   style: TextStyle(
+                        //     fontSize: 30,
+                        //     color:
+                        //         Theme.of(context).brightness == Brightness.light
+                        //             ? Colors.purple
+                        //             : Colors.white,
+                        //     fontFamily: 'K2D',
+                        //   ),
+                        // ),
                       ],
                     ),
                     Center(
@@ -190,10 +189,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                       ),
                       onPressed: () {
-                        Navigator.pushNamed(context, '/login');
+                        Navigator.popAndPushNamed(context, '/login');
                       },
-                      child: const Text('Login',
-                          style: TextStyle(color: Colors.white, fontSize: 16)),
+                      child: Text('Login',
+                          style: TextStyle(
+                              color: Theme.of(context).brightness ==
+                                      Brightness.light
+                                  ? Theme.of(context).primaryColor
+                                  : Colors.white,
+                              fontSize: 16)),
                     ),
                     // const Center(
                     //   child: Padding(

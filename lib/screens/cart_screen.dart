@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:input_quantity/input_quantity.dart';
-import 'package:sqflite/sqflite.dart';
 import '../components/cards/cart_item_card.dart';
 import 'package:intl/intl.dart';
 

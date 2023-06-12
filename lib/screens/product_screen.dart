@@ -89,7 +89,7 @@ class _ProductScreenState extends State<ProductScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.name),
+        // title: Text(widget.name),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -98,17 +98,17 @@ class _ProductScreenState extends State<ProductScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // Text(
-              //   widget.name,
-              //   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-              //   textAlign: TextAlign.center,
-              // ),
-              // SizedBox(
-              //   height:
-              //       MediaQuery.of(context).orientation == Orientation.portrait
-              //           ? 20
-              //           : 10,
-              // ),
+              Text(
+                widget.name,
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(
+                height:
+                    MediaQuery.of(context).orientation == Orientation.portrait
+                        ? 20
+                        : 10,
+              ),
               GridView(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),

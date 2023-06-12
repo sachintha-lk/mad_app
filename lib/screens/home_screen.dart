@@ -115,17 +115,20 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           );
                         },
-                        child: ProductItemCard(
-                          productName: featuredProduct['name'],
-                          productImg: featuredProduct['image'],
-                          // productPrice: product['price'],
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: 10.0),
+                          child: ProductItemCard(
+                            productName: featuredProduct['name'],
+                            productImg: featuredProduct['image'],
+                            // productPrice: product['price'],
 
-                          // if prodct price is int convert to double
-                          productPrice: featuredProduct['price'] is int
-                              ? (featuredProduct['price'] as int).toDouble()
-                              : featuredProduct['price'],
-                          productRating: featuredProduct[
-                              'rating'], // Set the product rating
+                            // if prodct price is int convert to double
+                            productPrice: featuredProduct['price'] is int
+                                ? (featuredProduct['price'] as int).toDouble()
+                                : featuredProduct['price'],
+                            productRating: featuredProduct[
+                                'rating'], // Set the product rating
+                          ),
                         ),
                       );
                     }),
