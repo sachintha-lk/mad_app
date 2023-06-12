@@ -3,6 +3,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:hive/hive.dart';
 import 'package:mad_app/components/bottom_nav_bar_other_pgs.dart';
 
+import '../components/cards/review_card.dart';
 import 'cart_screen.dart';
 
 class ProductScreen extends StatefulWidget {
@@ -244,109 +245,17 @@ class _ProductScreenState extends State<ProductScreen> {
               ),
 
               // review card
-              Card(
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          // user name
-                          Text(
-                            'John Doe',
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
-                          ),
-                          // rating stars
-                          RatingBarIndicator(
-                            rating: 3,
-                            itemBuilder: (context, index) => const Icon(
-                              Icons.star,
-                              color: Colors.amber,
-                            ),
-                            itemCount: 5,
-                            itemSize: 20,
-                            direction: Axis.horizontal,
-                          ),
-                        ],
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
-                        child: Text(
-                          "This is the best product I've ever bought from this store. I'm really happy with the quality of the product. I would recommend this product to anyone who's looking for a good quality product.",
-                          style: TextStyle(fontSize: 16),
-                        ),
-                      ),
-                      SizedBox(
-                        // height: Orientation.portrait == Orientation.portrait
-                        //     ? 100
-                        //     : 200,
-
-                        // width: Orientation.portrait == Orientation.portrait
-                        //     ? 100
-                        //     : 200,
-
-                        height: 200,
-                        width: 10,
-                        child: Image.asset(
-                          "lib/images/product_imgs/nike.png",
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+              ReviewCard(
+                reviewerName: "Jake Doe",
+                rating: 4,
+                review: "This is a really good product would 100% recommend",
+                imgPath: "lib/images/product_imgs/nike.png",
               ),
-              // review card
-              Card(
-                margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          // user name
-                          Text(
-                            'John Doe',
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
-                          ),
-                          // rating stars
-                          RatingBarIndicator(
-                            rating: 3,
-                            itemBuilder: (context, index) => const Icon(
-                              Icons.star,
-                              color: Colors.amber,
-                            ),
-                            itemCount: 5,
-                            itemSize: 20,
-                            direction: Axis.horizontal,
-                          ),
-                        ],
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
-                        child: Text(
-                          'Running shoes are very comfortable and the quality is very good. I would recommend this product to anyone who is looking for a good quality product.',
-                          style: TextStyle(fontSize: 16),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 200,
-                        width: 100,
-                        child: Image.asset(
-                          "lib/images/product_imgs/nike.png",
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+              ReviewCard(
+                reviewerName: "Mike Roberts",
+                rating: 4,
+                review: "This is a really good product would 100% recommend",
+                imgPath: "lib/images/product_imgs/nike.png",
               ),
             ],
           ),
